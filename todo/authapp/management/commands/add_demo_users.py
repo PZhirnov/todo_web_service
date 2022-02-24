@@ -25,6 +25,7 @@ class Command(BaseCommand):
         pass
 
     def handle(self, *args, **options):
+        # super_user = ApiUser.objects.create_superuser('django2', 'django@new.ru', 'geekbrains')
         create_user('django', 'geekbrains', 'django@geek.ru', 'Django', 'Admin', is_superuser=True)
         create_user('Alice', 'geekbrains', 'alisa@geek.ru', 'Alisa', 'Liddel')
         create_user('Mary', 'geekbrains', 'mary@geek.ru', 'Mary', 'Poppins')
