@@ -1,3 +1,9 @@
 from django.shortcuts import render
+from rest_framework.viewsets import ModelViewSet
+from authapp.models import ApiUser
+from .serializers import AppUsersSerializer
 
-# Create your views here.
+
+class AppUserViewSet(ModelViewSet):
+    queryset = ApiUser.objects.all()
+    serializer_class = AppUsersSerializer

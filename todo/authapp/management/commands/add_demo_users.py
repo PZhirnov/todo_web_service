@@ -1,0 +1,30 @@
+from django.core.management.base import BaseCommand, CommandError
+from authapp.models import ApiUser
+from uuid import uuid4
+
+
+def create_user(username, password, email="", firstName="", lastName="", is_superuser=False):
+    """
+    Функция создает суперпользователя
+    """
+    try:
+        user = ApiUser(username=username, email=email, first_name=firstName, last_name=lastName)
+        user.set_password(password)
+        user.uid = uuid4()
+        user.is_superuser = is_superuser
+        user.is_staff = False
+        user.save()
+        return user
+    except Exception as exc:
+        print('Суперпользователь ранее был создан / или не уникальный.', exc)
+
+
+class Command(BaseCommand):
+
+    def add_arguments(self, parser):
+        pass
+
+    def handle(self, *args, **options):
+        create_user('django', 'geekbrains', 'django@geek.ru', 'Django', 'Admin', is_superuser=True)
+        create_user('Alice', 'geekbrains', 'alisa@geek.ru', 'Alisa', 'Liddel')
+        create_user('Mary', 'geekbrains', 'mary@geek.ru', 'Mary', 'Poppins')
