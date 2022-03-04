@@ -35,7 +35,7 @@ CORS_ALLOWED_ORIGINS = [
 
 # Application definition
 
-AUTH_USER_MODEL = 'authapp.ApiUser'
+AUTH_USER_MODEL = 'authapp.User'
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authapp.apps.AuthappConfig',
+    'mainapp.apps.MainappConfig',
     'corsheaders',
     'rest_framework',
 ]
