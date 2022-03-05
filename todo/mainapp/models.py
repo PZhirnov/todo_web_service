@@ -11,25 +11,31 @@ class Project(models.Model):
     name = models.CharField(verbose_name='наименование проекта', max_length=64, blank=False, unique=True)
     description = models.TextField(verbose_name='описание проекта')
     href_repo = models.URLField(verbose_name='ccылка на репозиторий')
-    initiator_todo = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='uid инициатор заметки')
+    initiator_project = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='uid инициатор проекта')
     add_date = models.DateTimeField(verbose_name='дата добавления проекта в БД', auto_now_add=True)
     last_modified = models.DateTimeField(verbose_name='дата последнего изменния', auto_now=True)
+
+    def __str__(self):
+        return self.name
 
 
 # Executor on Project
 # В данной модели храним всех пользователей, которые были выделены на проект
 class UserOnProject(models.Model):
     # uid = models.UUIDField(verbose_name='id связи c исполнителем', primary_key=True, default=uuid4())
-    uid_project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    uid_user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
     add_date = models.DateTimeField(verbose_name='дата добавления проекта в БД', auto_now_add=True)
     last_modified = models.DateTimeField(verbose_name='дата последнего изменния', auto_now=True)
+
+    def __str__(self):
+        return f"{self.user}"
 
 
 # Описание полей заметки
 class ToDo(models.Model):
     # uid = models.UUIDField(verbose_name='id заметки', primary_key=True, default=uuid4())
-    uid_project = models.ForeignKey(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     initiator_todo = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, verbose_name='uid инициатор заметки')
     title = models.CharField(verbose_name='заголовок заметки', max_length=64, unique=False, default='не определен')
     description = models.TextField(verbose_name='текст заметки', default='не определен')
@@ -43,7 +49,7 @@ class ToDo(models.Model):
 
 # Исполнитель заметки
 class Executor(models.Model):
-    uid_todo = models.ForeignKey(ToDo, on_delete=models.CASCADE)
-    uid_user = models.ForeignKey(UserOnProject, on_delete=models.SET_NULL, null=True)
+    todo = models.ForeignKey(ToDo, on_delete=models.CASCADE)
+    user = models.ForeignKey(UserOnProject, on_delete=models.SET_NULL, null=True)
     add_date = models.DateTimeField(verbose_name='дата добавления проекта в БД', auto_now_add=True)
     last_modified = models.DateTimeField(verbose_name='дата последнего изменния', auto_now=True)

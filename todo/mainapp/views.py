@@ -1,6 +1,6 @@
 from django.shortcuts import render
-from mainapp.models import Project, ToDo
-from .serializers import ProjectModelSerializer, TodoModelSerializer
+from mainapp.models import Project, ToDo, UserOnProject, Executor
+from .serializers import ProjectModelSerializer, TodoModelSerializer, UserOnProjectSerializer, ExecutorToDoModelSerializer
 from rest_framework.viewsets import ModelViewSet
 
 
@@ -17,9 +17,11 @@ class ToDoViewSet(ModelViewSet):
     serializer_class = TodoModelSerializer
 
 
+class UserOnProjectViewSet(ModelViewSet):
+    queryset = UserOnProject.objects.all()
+    serializer_class = UserOnProjectSerializer
 
 
-
-
-
-
+class ExecutorViewSet(ModelViewSet):
+    queryset = Executor.objects.all()
+    serializer_class = ExecutorToDoModelSerializer
