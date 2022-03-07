@@ -27,7 +27,7 @@ class ExecutorToDoModelSerializer(HyperlinkedModelSerializer):
 
 
 class TodoModelSerializer(HyperlinkedModelSerializer):
-    project = ProjectModelSerializer()
+   #  project = ProjectModelSerializer()
 
     class Meta:
         model = ToDo

@@ -47,7 +47,7 @@ class ToDo(models.Model):
     last_modified = models.DateTimeField(verbose_name='дата последнего изменния', auto_now=True)
 
 
-# Исполнитель заметки
+# Исполнитель заметки - user
 class Executor(models.Model):
     todo = models.ForeignKey(ToDo, on_delete=models.CASCADE)
     user = models.ForeignKey(UserOnProject, on_delete=models.SET_NULL, null=True)
