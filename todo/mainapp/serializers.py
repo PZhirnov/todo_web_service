@@ -11,9 +11,9 @@ class ProjectModelSerializer(HyperlinkedModelSerializer):
         fields ='__all__'
 
 
-class UserOnProjectSerializer(HyperlinkedModelSerializer):
-    project = ProjectModelSerializer()
-    user = AppUsersSerializer()
+class UserOnProjectSerializer(serializers.ModelSerializer):
+    # project = serializers.StringRelatedField(many=False)
+    # user = AppUsersSerializer()
 
     class Meta:
         model = UserOnProject

@@ -46,6 +46,9 @@ class ToDo(models.Model):
     add_date = models.DateTimeField(verbose_name='дата добавления проекта в БД', auto_now_add=True)
     last_modified = models.DateTimeField(verbose_name='дата последнего изменния', auto_now=True)
 
+    def __str__(self):
+        return f"{self.project} - {self.title}"
+
 
 # Исполнитель заметки - user
 class Executor(models.Model):
