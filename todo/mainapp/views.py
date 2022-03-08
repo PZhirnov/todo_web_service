@@ -45,26 +45,26 @@ class ToDoViewSet(ModelViewSet):
     serializer_class = TodoModelSerializer
     filterset_fields = ['project']
     pagination_class = ToDoLimitOffsetPagination
-    http_method_names = ['get', 'post', 'head', 'delete']
+    # http_method_names = ['get', 'post', 'head', 'delete']
+
+    # После удаления выведем результат изменений в базе данных
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        serializer = self.get_serializer(instance)
+        if serializer:
+            return Response(serializer.data)
+        else:
+            return Response(status=status.HTTP_204_NO_CONTENT)
 
     # При удалении сделаем присвоим is_active False и сохраним данные
     def perform_destroy(self, instance):
-        print('сработал')
         instance.is_active = False
         instance.is_close = True
         instance.save()
-
-
-# class ToDoViewSet(CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView):
-#     renderer_classes = [JSONRenderer]
-#     queryset = ToDo.objects.all()
-#     serializer_class = TodoModelSerializer
-#     filterset_fields = ['project']
-#     pagination_class = ToDoLimitOffsetPagination
-#
-#     def perform_destroy(self, instance):
-#         instance.is_active = False
-#         instance.save()
+        serializer = self.get_serializer(instance)
+        # print(serializer.data)
+        return Response(serializer.data)
 
 
 class UserOnProjectViewSet(ModelViewSet):
