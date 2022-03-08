@@ -1,12 +1,20 @@
+from django.http import Http404
 from django.shortcuts import render
+from rest_framework import mixins, status
+from rest_framework.decorators import action
+from rest_framework.generics import DestroyAPIView, ListAPIView, RetrieveAPIView, CreateAPIView
+from rest_framework.renderers import JSONRenderer
+from rest_framework.response import Response
+
 from mainapp.models import Project, ToDo, UserOnProject, Executor
 from .serializers import ProjectModelSerializer, TodoModelSerializer, UserOnProjectSerializer, ExecutorToDoModelSerializer
-from rest_framework.viewsets import ModelViewSet
+from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.pagination import LimitOffsetPagination
 from mainapp.filters import ProjectFilter
 
 # Create your views here.
-# ●	модель Project: доступны все варианты запросов;
+
+# п.3.2. Модель Project: доступны все варианты запросов;
 # для постраничного вывода установить размер страницы 10 записей; добавить фильтрацию по совпадению части названия проекта;
 
 
@@ -22,21 +30,41 @@ class ProjectViewSet(ModelViewSet):
     pagination_class = ProjectLimitOffsetPagination
 
 
+# п.3.3.
+# ToDo: доступны все варианты запросов; при удалении не удалять ToDo,
+#  а выставлять признак, что оно закрыто; добавить фильтрацию по проекту;
+#  для постраничного вывода установить размер страницы 20.
+
 class ToDoLimitOffsetPagination(LimitOffsetPagination):
     default_limit = 20
 
 
 class ToDoViewSet(ModelViewSet):
+    renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
     serializer_class = TodoModelSerializer
     filterset_fields = ['project']
     pagination_class = ToDoLimitOffsetPagination
+    http_method_names = ['get', 'post', 'head', 'delete']
 
-    # def perform_destroy(self, instance):
-    #     super(ToDoViewSet, self).perform_destroy(instance)
-    #     print(instance)
-    #     instance.is_active = False
-    #     instance.save()
+    # При удалении сделаем присвоим is_active False и сохраним данные
+    def perform_destroy(self, instance):
+        print('сработал')
+        instance.is_active = False
+        instance.is_close = True
+        instance.save()
+
+
+# class ToDoViewSet(CreateAPIView, ListAPIView, RetrieveAPIView, DestroyAPIView):
+#     renderer_classes = [JSONRenderer]
+#     queryset = ToDo.objects.all()
+#     serializer_class = TodoModelSerializer
+#     filterset_fields = ['project']
+#     pagination_class = ToDoLimitOffsetPagination
+#
+#     def perform_destroy(self, instance):
+#         instance.is_active = False
+#         instance.save()
 
 
 class UserOnProjectViewSet(ModelViewSet):
