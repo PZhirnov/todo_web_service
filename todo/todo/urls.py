@@ -24,7 +24,7 @@ from authapp.views import AppUserViewSet
 router = DefaultRouter()
 # router.register('users', AppUserViewSet, basename='users')
 router.register('projects', ProjectViewSet)
-router.register('todo', ToDoViewSet, basename='todo')
+router.register('todo', ToDoViewSet)
 router.register('users_on_project', UserOnProjectViewSet)
 router.register('executors', ExecutorViewSet)
 
