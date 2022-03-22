@@ -18,7 +18,7 @@ from django.db import router
 from django.urls import path, include
 from rest_framework.routers import DefaultRouter
 from authapp.views import AppUserViewSet
-from mainapp.views import ProjectViewSet, ToDoViewSet, UserOnProjectViewSet, ExecutorViewSet
+from mainapp.views import ProjectViewSet, ToDoViewSet,  UserOnProjectViewSet, ExecutorViewSet
 from authapp.views import AppUserViewSet
 
 router = DefaultRouter()

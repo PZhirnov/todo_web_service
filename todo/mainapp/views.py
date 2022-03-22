@@ -6,7 +6,7 @@ from rest_framework import mixins, status
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from .models import Project, ToDo, UserOnProject, Executor
+from .models import Project, ToDo # UserOnProject, Executor
 from .serializers import ProjectModelSerializer, \
     TodoModelSerializer, UserOnProjectSerializer, ExecutorToDoModelSerializer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -96,10 +96,10 @@ class ToDoViewSet(ModelViewSet):
 
 
 class UserOnProjectViewSet(ModelViewSet):
-    queryset = UserOnProject.objects.all()
+    queryset = Project.user_on_project
     serializer_class = UserOnProjectSerializer
 
 
 class ExecutorViewSet(ModelViewSet):
-    queryset = Executor.objects.all()
+    queryset = ToDo.user_on_todo
     serializer_class = ExecutorToDoModelSerializer
