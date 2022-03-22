@@ -6,7 +6,7 @@ from rest_framework import mixins, status
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from .models import Project, ToDo # UserOnProject, Executor
+from .models import Project, ToDo, UserOnProject, Executor
 from .serializers import ProjectModelSerializer, \
     TodoModelSerializer, UserOnProjectSerializer, ExecutorToDoModelSerializer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -59,7 +59,7 @@ class ToDoViewSet(ModelViewSet):
     renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
     serializer_class = TodoModelSerializer
-    filterset_fields = ['project']
+    filterset_fields = ['project_id']
     pagination_class = ToDoLimitOffsetPagination
     # http_method_names = ['get', 'post', 'head', 'delete']
 
@@ -96,10 +96,10 @@ class ToDoViewSet(ModelViewSet):
 
 
 class UserOnProjectViewSet(ModelViewSet):
-    queryset = Project.user_on_project
+    queryset = UserOnProject.objects.all()
     serializer_class = UserOnProjectSerializer
 
 
 class ExecutorViewSet(ModelViewSet):
-    queryset = ToDo.user_on_todo
+    queryset = Executor.objects.all()
     serializer_class = ExecutorToDoModelSerializer

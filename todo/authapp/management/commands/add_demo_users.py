@@ -29,3 +29,6 @@ class Command(BaseCommand):
         create_user('django', 'geekbrains', 'django@geek.ru', 'Django', 'Admin', is_superuser=True)
         create_user('Alice', 'geekbrains', 'alisa@geek.ru', 'Alisa', 'Liddel')
         create_user('Mary', 'geekbrains', 'mary@geek.ru', 'Mary', 'Poppins')
+        create_user('Pavel', 'geekbrains', 'pavel@geek.ru', 'Pavel', 'Zhirnov')
+        create_user('Fedor', 'geekbrains', 'fedor@geek.ru', 'Fedor', 'Nikonov')
+        create_user('Evgenyi', 'geekbrains', 'evg@geek.ru', 'Evgeniy', 'Sam')
