@@ -10,15 +10,15 @@ from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView,
 # и каждого пользователя в отдельности, можно вносить изменения, нельзя удалять и создавать;
 
 
-class AppUserViewSet(ListAPIView,
-                     RetrieveAPIView,
-                     GenericAPIView):
-    renderer_classes = [JSONRenderer]
-    queryset = User.objects.all()
-    serializer_class = AppUsersSerializer
-
-
-
-# class AppUserViewSet(ModelViewSet):
+# class AppUserViewSet(ListAPIView,
+#                      RetrieveAPIView,
+#                      GenericAPIView):
+#     renderer_classes = [JSONRenderer]
 #     queryset = User.objects.all()
 #     serializer_class = AppUsersSerializer
+
+
+
+class AppUserViewSet(ModelViewSet):
+    queryset = User.objects.all()
+    serializer_class = AppUsersSerializer
