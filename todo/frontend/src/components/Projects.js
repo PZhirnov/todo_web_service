@@ -21,7 +21,7 @@ const ProjectItem = ({project}) => {
                {project.addDate}
            </td>
            <td>
-                <Link to={`projects/${project.id}`} class="btn btn-dark">Открыть задачи</Link>
+                <Link to={`projects/${project.id}/${project.name}/`} class="btn btn-dark">Открыть задачи</Link>
            </td>
        </tr>
    )

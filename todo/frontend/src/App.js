@@ -8,6 +8,16 @@ import ProjectToDoList from './components/ToDoList';
 import axios from 'axios';
 import {HashRouter, Route, Router, Routes, Link, Switch, Redirect, BrowserRouter} from 'react-router-dom'
 
+
+const NotFound404 = ({ location }) => {
+  return (
+    <div>
+      <h1>Страница по адресу '{location.pathname}' не найдена</h1>
+    </div>
+  )
+} 
+
+
 class App extends React.Component {
   constructor(props) {
     super(props)
@@ -77,12 +87,11 @@ class App extends React.Component {
               <Route exact path='/' component={() => <UsersList users={this.state.users} />} />
               <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects} />} />
               <Route exact path='/tasks' component={() => <ToDoList todo_items={this.state.todo_items} />} />
-
-              <Route path='/projects/:id' >
+              
+              <Route path='/projects/:id/:title/' >
                 <ProjectToDoList todo_items={this.state.todo_items} />
               </Route>
-
-
+              <Route component={NotFound404} />
             </Switch>
           </BrowserRouter>
         </div>

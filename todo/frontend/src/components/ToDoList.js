@@ -26,11 +26,12 @@ const ToDoItem = ({todo}) => {
 
 const ProjectToDoList = ({todo_items}) => {
     let {id} = useParams();
+    let {title} = useParams();
     let filtered_Items = todo_items.filter((todo) => todo.project_id == id)
     console.log(`данные - ${todo_items}`)
     return (
         <div>
-            Задачи не проекте № {id}:
+            <h1>Задачи на проекте '{title}' :</h1>
             <table>
                 <tr>
                     <th>id</th>
