@@ -1,4 +1,5 @@
-import React from 'react'
+import React from 'react';
+import { Link } from 'react-router-dom';
 
 
 const ProjectItem = ({project}) => {
@@ -19,6 +20,9 @@ const ProjectItem = ({project}) => {
            <td>
                {project.addDate}
            </td>
+           <td>
+                <Link to={`projects/${project.id}`} class="btn btn-dark">Открыть задачи</Link>
+           </td>
        </tr>
    )
 }
@@ -31,7 +35,7 @@ const ProjectList = ({projects}) => {
             <h1>Список проектов:</h1>
             <table>
                 <th>
-                    uid
+                    id
                 </th>
                 <th>
                     Наименование проекта
@@ -44,6 +48,9 @@ const ProjectList = ({projects}) => {
                 </th>
                 <th>
                     Дата добавления проекта
+                </th>
+                <th>
+                    Задачи на проекте
                 </th>
                 {projects.map((project) => <ProjectItem project={project} />)}
             </table>

@@ -4,6 +4,7 @@ import './App.css';
 import UsersList from './components/Users';
 import ProjectList from './components/Projects';
 import ToDoList from './components/ToDo';
+import ProjectToDoList from './components/ToDoList';
 import axios from 'axios';
 import {HashRouter, Route, Router, Routes, Link, Switch, Redirect, BrowserRouter} from 'react-router-dom'
 
@@ -76,6 +77,12 @@ class App extends React.Component {
               <Route exact path='/' component={() => <UsersList users={this.state.users} />} />
               <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects} />} />
               <Route exact path='/tasks' component={() => <ToDoList todo_items={this.state.todo_items} />} />
+
+              <Route path='/projects/:id' >
+                <ProjectToDoList todo_items={this.state.todo_items} />
+              </Route>
+
+
             </Switch>
           </BrowserRouter>
         </div>

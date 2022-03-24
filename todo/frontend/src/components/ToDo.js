@@ -43,7 +43,7 @@ const ToDoList = ({todo_items}) => {
                     Активное
                 </th>
                 <th>
-                    Закрыто
+                    Добавлено
                 </th>
                 {todo_items.map((todo) => <ToDoItem todo={todo} />)}
             </table>
