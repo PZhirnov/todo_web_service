@@ -20,6 +20,7 @@ from rest_framework.routers import DefaultRouter
 from authapp.views import AppUserViewSet
 from mainapp.views import ProjectViewSet, ToDoViewSet,  UserOnProjectViewSet, ExecutorViewSet
 from authapp.views import AppUserViewSet
+from rest_framework.authtoken import views
 
 router = DefaultRouter()
 router.register('users', AppUserViewSet, basename='users')
@@ -33,6 +34,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
     path('api-auth/', include('rest_framework.urls')),
     path('api/', include(router.urls)),
+    path('api-token-auth/', views.obtain_auth_token),
     # path('api/users/', AppUserViewSet.as_view()),
     # path('api/todo/<int:pk>', ToDoViewSet.as_view({'get': 'list'})),
     # path('api/todo/', ToDoViewSet.as_view({'get': 'list'})),
