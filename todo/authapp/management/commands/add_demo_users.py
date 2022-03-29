@@ -10,7 +10,7 @@ def create_user(username, password, email="", firstName="", lastName="", is_supe
     try:
         user = User(username=username, email=email, first_name=firstName, last_name=lastName)
         user.set_password(password)
-        user.uid = uuid4()
+        # user.uid = uuid4()
         user.is_superuser = is_superuser
         user.is_staff = False
         user.save()
