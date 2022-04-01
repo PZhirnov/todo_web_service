@@ -1,6 +1,6 @@
 # from django.http import Http404
 # from django.shortcuts import render
-from rest_framework import mixins, status
+from rest_framework import mixins, status, permissions
 # from rest_framework.decorators import action
 # from rest_framework.generics import DestroyAPIView, ListAPIView, RetrieveAPIView, CreateAPIView
 from rest_framework.renderers import JSONRenderer
@@ -31,6 +31,7 @@ class ProjectViewSet(ModelViewSet):
     # filterset_fields = ['name']
     filterset_class = ProjectFilter
     pagination_class = ProjectLimitOffsetPagination
+    permission_classes = [permissions.IsAuthenticated]
 
 
 # п.3.3.
@@ -56,11 +57,12 @@ def get_datetime(data_string: str, add_days=0):
 
 
 class ToDoViewSet(ModelViewSet):
-    # renderer_classes = [JSONRenderer]
+    renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
     serializer_class = TodoModelSerializer
     filterset_fields = ['project_id']
     pagination_class = ToDoLimitOffsetPagination
+    permission_classes = [permissions.IsAuthenticated]
     # http_method_names = ['get', 'post', 'head', 'delete']
 
     def get_queryset(self):

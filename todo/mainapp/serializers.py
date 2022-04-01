@@ -29,7 +29,7 @@ class ExecutorToDoModelSerializer(HyperlinkedModelSerializer):
 
 class TodoModelSerializer(serializers.ModelSerializer):
     # project_id = ProjectModelSerializer()
-    project_id = serializers.StringRelatedField(many=False)
+    # project_id = serializers.StringRelatedField(many=False)
 
     class Meta:
         model = ToDo

@@ -28,7 +28,7 @@ const ProjectToDoList = ({todo_items}) => {
     let {id} = useParams();
     let {title} = useParams();
     let filtered_Items = todo_items.filter((todo) => todo.project_id == id)
-    console.log(`данные - ${todo_items}`)
+    console.log(`данные - ${id} ${todo_items}`)
     return (
         <div>
             <h1>Задачи на проекте '{title}' :</h1>
