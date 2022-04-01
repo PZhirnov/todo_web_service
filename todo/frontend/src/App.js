@@ -5,6 +5,7 @@ import UsersList from './components/Users';
 import ProjectList from './components/Projects';
 import ToDoList from './components/ToDo';
 import ProjectToDoList from './components/ToDoList';
+import LoginForm from './components/Auth';
 import axios from 'axios';
 import {HashRouter, Route, Router, Routes, Link, Switch, Redirect, BrowserRouter} from 'react-router-dom'
 
@@ -81,13 +82,16 @@ class App extends React.Component {
                 <li>
                   <Link to='/tasks'>Задачи</Link>
                 </li>
+                <li>
+                  <Link to='/login'>Login</Link>
+                </li>
               </ul>
             </nav>
             <Switch>
               <Route exact path='/' component={() => <UsersList users={this.state.users} />} />
               <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects} />} />
               <Route exact path='/tasks' component={() => <ToDoList todo_items={this.state.todo_items} />} />
-              
+              <Route exact path='/login' component={() => <LoginForm />} />
               <Route path='/projects/:id/:title/' >
                 <ProjectToDoList todo_items={this.state.todo_items} />
               </Route>
