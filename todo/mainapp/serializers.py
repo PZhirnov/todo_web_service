@@ -11,9 +11,10 @@ class ProjectModelSerializer(serializers.ModelSerializer):
         fields ='__all__'
 
 
-class UserOnProjectSerializer(serializers.Serializer):
+class UserOnProjectSerializer(serializers.ModelSerializer):
     project = serializers.StringRelatedField(many=False)
-    user = AppUsersSerializer()
+    # project = ProjectModelSerializer(many=False)
+    #user = serializers.ManyRelatedField(many=True)
 
     class Meta:
         model = UserOnProject
@@ -27,7 +28,8 @@ class ExecutorToDoModelSerializer(HyperlinkedModelSerializer):
 
 
 class TodoModelSerializer(serializers.ModelSerializer):
-   #  project = ProjectModelSerializer()
+    # project_id = ProjectModelSerializer()
+    project_id = serializers.StringRelatedField(many=False)
 
     class Meta:
         model = ToDo

@@ -6,7 +6,7 @@ class AppUsersSerializer(HyperlinkedModelSerializer):
     class Meta:
         model = User
         # fields = '__all__'
-        fields = ['uid',
+        fields = ['id',
                   'username',
                   'first_name',
                   'last_name',

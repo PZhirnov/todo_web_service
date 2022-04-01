@@ -56,7 +56,7 @@ def get_datetime(data_string: str, add_days=0):
 
 
 class ToDoViewSet(ModelViewSet):
-    renderer_classes = [JSONRenderer]
+    # renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
     serializer_class = TodoModelSerializer
     filterset_fields = ['project_id']
