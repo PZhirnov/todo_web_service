@@ -22,7 +22,7 @@ from datetime import datetime, timedelta
 
 
 class ProjectLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 10
+    default_limit = 3
 
 
 class ProjectViewSet(ModelViewSet):
@@ -31,7 +31,7 @@ class ProjectViewSet(ModelViewSet):
     # filterset_fields = ['name']
     filterset_class = ProjectFilter
     pagination_class = ProjectLimitOffsetPagination
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
 
 
 # п.3.3.

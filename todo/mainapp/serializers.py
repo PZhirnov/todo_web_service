@@ -5,16 +5,18 @@ from .models import Project, ToDo, UserOnProject, Executor
 
 
 class ProjectModelSerializer(serializers.ModelSerializer):
+    user_on_project = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = Project
-        fields ='__all__'
+        fields = '__all__'
 
 
 class UserOnProjectSerializer(serializers.ModelSerializer):
     project = serializers.StringRelatedField(many=False)
+
     # project = ProjectModelSerializer(many=False)
-    #user = serializers.ManyRelatedField(many=True)
+    # user = serializers.ManyRelatedField(many=True)
 
     class Meta:
         model = UserOnProject
@@ -30,7 +32,10 @@ class ExecutorToDoModelSerializer(HyperlinkedModelSerializer):
 class TodoModelSerializer(serializers.ModelSerializer):
     # project_id = ProjectModelSerializer()
     # project_id = serializers.StringRelatedField(many=False)
+    user_on_todo = serializers.StringRelatedField(many=True)
 
     class Meta:
         model = ToDo
         fields = '__all__'
+
+

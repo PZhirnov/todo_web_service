@@ -142,10 +142,11 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # https://github.com/vbabiy/djangorestframework-camel-case
 
+from rest_framework.permissions import DjangoModelPermissionsOrAnonReadOnly
 
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': (
-        'rest_framework.permissions.DjangoModelPermissions',
+        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly',
     ),
 
     'DEFAULT_AUTHENTICATION_CLASSES': (
