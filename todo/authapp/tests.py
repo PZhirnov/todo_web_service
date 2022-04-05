@@ -45,22 +45,24 @@ class TestToken(TestCase):
         self.assertNotEqual(token_access, token_access_refresh)
 
 # import coreapi
-# from coreapi import Client
-#
-#
-# class LiveTest(TestCase):
-#
-#     def setUp(self):
-#         self.data = {'name': 'test project2',
-#                      'description': 'best project',
-#                      'hrefRepo': 'https://api.nasdaq.com'}
-#
-#     def test_first(self):
-#         # Fetch the API schema
-#         client = Client()
-#         document = client.get('http://127.0.0.1:8000/api/')
-#         print(document)
-#         data = client.action(document, ['projects', ''])
+
+from coreapi import Client
+
+
+class LiveTest(TestCase):
+
+    def setUp(self):
+        self.data = {'name': 'test project2',
+                     'description': 'best project',
+                     'hrefRepo': 'https://api.nasdaq.com'}
+
+    def test_first(self):
+        # Fetch the API schema
+        client = Client()
+        document = client.get('http://127.0.0.1:8000/schema/')
+        print(type(document))
+        # client.action(document, ['projects', 'create'], params=self.data)
+        #print(data)
 
 
 

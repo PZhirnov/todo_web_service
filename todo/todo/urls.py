@@ -22,6 +22,7 @@ from mainapp.views import ProjectViewSet, ToDoViewSet,  UserOnProjectViewSet, Ex
 from authapp.views import AppUserViewSet
 from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from rest_framework.schemas import get_schema_view
 
 
 router = DefaultRouter()
@@ -31,6 +32,7 @@ router.register('todo', ToDoViewSet)
 router.register('users_on_project', UserOnProjectViewSet)
 router.register('executors', ExecutorViewSet)
 
+schema_view = get_schema_view(title="Example API")
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,5 +45,7 @@ urlpatterns = [
     # path('api/users/', AppUserViewSet.as_view()),
     # path('api/todo/<int:pk>', ToDoViewSet.as_view({'get': 'list'})),
     # path('api/todo/', ToDoViewSet.as_view({'get': 'list'})),
+    path('schema/', schema_view),
 ]
 
+# https://www.django-rest-framework.org/coreapi/schemas/
