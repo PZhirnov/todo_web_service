@@ -18,7 +18,6 @@ from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView,
 #     serializer_class = AppUsersSerializer
 
 
-
 class AppUserViewSet(ModelViewSet):
     queryset = User.objects.all()
     serializer_class = AppUsersSerializer

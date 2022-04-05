@@ -4,6 +4,15 @@ from authapp.serializers import AppUsersSerializer
 from .models import Project, ToDo, UserOnProject, Executor
 
 
+class ProjectSerializerBase(serializers.ModelSerializer):
+    '''
+        Используется для добавления нового проекта
+    '''
+    class Meta:
+        model = Project
+        fields = '__all__'
+
+
 class ProjectModelSerializer(serializers.ModelSerializer):
     user_on_project = serializers.StringRelatedField(many=True)
 

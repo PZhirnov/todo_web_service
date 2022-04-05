@@ -7,7 +7,7 @@ from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
 from .models import Project, ToDo, UserOnProject, Executor
-from .serializers import ProjectModelSerializer, \
+from .serializers import ProjectModelSerializer, ProjectSerializerBase,\
     TodoModelSerializer, UserOnProjectSerializer, ExecutorToDoModelSerializer
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.pagination import LimitOffsetPagination
@@ -26,12 +26,21 @@ class ProjectLimitOffsetPagination(LimitOffsetPagination):
 
 
 class ProjectViewSet(ModelViewSet):
+    # renderer_classes = [JSONRenderer]
     queryset = Project.objects.all()
-    serializer_class = ProjectModelSerializer
+    # serializer_class = ProjectModelSerializer
     # filterset_fields = ['name']
     filterset_class = ProjectFilter
     pagination_class = ProjectLimitOffsetPagination
     # permission_classes = [permissions.IsAuthenticated]
+
+    def get_serializer_class(self):
+        '''
+           ProjectSerializerBase используется для сохранения данных
+        '''
+        if self.request.method in ['GET']:
+            return ProjectSerializerBase
+        return ProjectModelSerializer
 
 
 # п.3.3.
@@ -62,7 +71,7 @@ class ToDoViewSet(ModelViewSet):
     serializer_class = TodoModelSerializer
     filterset_fields = ['project_id']
     pagination_class = ToDoLimitOffsetPagination
-    permission_classes = [permissions.IsAuthenticated]
+    # permission_classes = [permissions.IsAuthenticated]
     # http_method_names = ['get', 'post', 'head', 'delete']
 
     def get_queryset(self):

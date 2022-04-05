@@ -4,6 +4,9 @@ from requests import request, post, get
 
 
 class TestToken(TestCase):
+    '''
+        Проверка создания и получения токенов на работающем сервере
+    '''
 
     def setUp(self):
         self.data = {'username': 'django', 'password': 'geekbrains'}
