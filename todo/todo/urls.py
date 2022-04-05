@@ -26,7 +26,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 router = DefaultRouter()
 router.register('users', AppUserViewSet, basename='users')
-router.register('projects', ProjectViewSet)
+router.register('projects', ProjectViewSet, basename='projects')
 router.register('todo', ToDoViewSet)
 router.register('users_on_project', UserOnProjectViewSet)
 router.register('executors', ExecutorViewSet)

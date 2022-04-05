@@ -8,7 +8,7 @@ from rest_framework.response import Response
 
 from .models import Project, ToDo, UserOnProject, Executor
 from .serializers import ProjectModelSerializer, ProjectSerializerBase,\
-    TodoModelSerializer, UserOnProjectSerializer, ExecutorToDoModelSerializer
+    TodoModelSerializer, UserOnProjectSerializer, ExecutorToDoModelSerializer, TodoModelSerializerBase
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.pagination import LimitOffsetPagination
 from mainapp.filters import ProjectFilter
@@ -36,11 +36,11 @@ class ProjectViewSet(ModelViewSet):
 
     def get_serializer_class(self):
         '''
-           ProjectSerializerBase используется для сохранения данных
+           ProjectSerializerBase используется для сохранения/обновления данных
         '''
         if self.request.method in ['GET']:
-            return ProjectSerializerBase
-        return ProjectModelSerializer
+            return ProjectModelSerializer
+        return ProjectSerializerBase
 
 
 # п.3.3.
@@ -68,11 +68,20 @@ def get_datetime(data_string: str, add_days=0):
 class ToDoViewSet(ModelViewSet):
     renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
-    serializer_class = TodoModelSerializer
+    # serializer_class = TodoModelSerializer
     filterset_fields = ['project_id']
     pagination_class = ToDoLimitOffsetPagination
     # permission_classes = [permissions.IsAuthenticated]
     # http_method_names = ['get', 'post', 'head', 'delete']
+
+    def get_serializer_class(self):
+        '''
+           Base используется для сохранения/обновления данных
+        '''
+        if self.request.method in ['GET']:
+            return TodoModelSerializer
+        return TodoModelSerializerBase
+
 
     def get_queryset(self):
         super(ToDoViewSet, self).get_queryset()

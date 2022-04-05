@@ -1,6 +1,7 @@
 from django.test import TestCase
 from requests import request, post, get
 # Create your tests here.
+from rest_framework.test import CoreAPIClient
 
 
 class TestToken(TestCase):
@@ -42,3 +43,33 @@ class TestToken(TestCase):
         response_refresh = post(self.url_token_jwt, data={'refresh': token_refresh})
         token_access_refresh = response_refresh.json().get('access')
         self.assertNotEqual(token_access, token_access_refresh)
+
+# import coreapi
+# from coreapi import Client
+#
+#
+# class LiveTest(TestCase):
+#
+#     def setUp(self):
+#         self.data = {'name': 'test project2',
+#                      'description': 'best project',
+#                      'hrefRepo': 'https://api.nasdaq.com'}
+#
+#     def test_first(self):
+#         # Fetch the API schema
+#         client = Client()
+#         document = client.get('http://127.0.0.1:8000/api/')
+#         print(document)
+#         data = client.action(document, ['projects', ''])
+
+
+
+        # # Создадим новый проект
+        # params = self.data
+        # client.action(schema, ['projects', 'create'], params)
+        #
+        # # Ensure that the organisation exists in the listing
+        # data = client.action(schema, ['projects', 'list'])
+        # assert (len(data) == 1)
+        # # assert (data == [{'name': 'MegaCorp', 'status': 'active'}])
+

@@ -38,6 +38,12 @@ class ExecutorToDoModelSerializer(HyperlinkedModelSerializer):
         fields = '__all__'
 
 
+class TodoModelSerializerBase(serializers.ModelSerializer):
+    class Meta:
+        model = ToDo
+        fields = '__all__'
+
+
 class TodoModelSerializer(serializers.ModelSerializer):
     # project_id = ProjectModelSerializer()
     # project_id = serializers.StringRelatedField(many=False)
