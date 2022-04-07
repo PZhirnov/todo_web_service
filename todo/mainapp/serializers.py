@@ -11,8 +11,9 @@ class ProjectSerializerBase(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
+        extra_kwargs = {'user_on_project': {'required': False}}
 
-
+        
 class ProjectModelSerializer(serializers.ModelSerializer):
     user_on_project = serializers.StringRelatedField(many=True)
 

@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from rest_framework import permissions
 from rest_framework.renderers import JSONRenderer
 from rest_framework.viewsets import ModelViewSet
 from authapp.models import User
@@ -16,8 +17,11 @@ from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView,
 #     renderer_classes = [JSONRenderer]
 #     queryset = User.objects.all()
 #     serializer_class = AppUsersSerializer
+#     permission_classes = [permissions.IsAuthenticated]
 
 
 class AppUserViewSet(ModelViewSet):
+    renderer_classes = [JSONRenderer]
     queryset = User.objects.all()
     serializer_class = AppUsersSerializer
+    permission_classes = [permissions.IsAuthenticated]

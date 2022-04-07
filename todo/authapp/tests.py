@@ -8,7 +8,6 @@ class TestToken(TestCase):
     '''
         Проверка создания и получения токенов на работающем сервере
     '''
-
     def setUp(self):
         self.data = {'username': 'django', 'password': 'geekbrains'}
         self.password = 'geekbrains'
@@ -59,11 +58,10 @@ class LiveTest(TestCase):
     def test_first(self):
         # Fetch the API schema
         client = Client()
-        document = client.get('http://127.0.0.1:8000/schema/')
+        # document = client.get('http://127.0.0.1:8000/schema/')
         print(type(document))
-        # client.action(document, ['projects', 'create'], params=self.data)
-        #print(data)
-
+        data = client.action(document, ['ProjectModel', 'get'])
+        print(data)
 
 
         # # Создадим новый проект
@@ -74,4 +72,3 @@ class LiveTest(TestCase):
         # data = client.action(schema, ['projects', 'list'])
         # assert (len(data) == 1)
         # # assert (data == [{'name': 'MegaCorp', 'status': 'active'}])
-
