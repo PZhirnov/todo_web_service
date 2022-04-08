@@ -179,10 +179,10 @@ REST_FRAMEWORK = {
     # 1 - UrlPathVersioning
     # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.URLPathVersioning',
     # 2 - NamespaceVersioning
+    # 'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
+    # 3 - Версия передается в параметре URL-адреса - пример запроса: http://127.0.0.1:8000/api/users/?version=2.0
     'DEFAULT_VERSIONING_CLASS': 'rest_framework.versioning.NamespaceVersioning',
 }
-
-from rest_framework.versioning import NamespaceVersioning
 
 # Настройка параметров токенов JWT
 SIMPLE_JWT = {

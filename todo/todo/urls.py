@@ -26,7 +26,7 @@ from rest_framework.schemas import get_schema_view
 
 
 router = DefaultRouter()
-# router.register('users', AppUserViewSet, basename='users') # ниже перевели на возможность выбора версии
+router.register('users', AppUserViewSet, basename='users')
 router.register('projects', ProjectViewSet, basename='projects')
 router.register('todo', ToDoViewSet)
 router.register('users_on_project', UserOnProjectViewSet)
@@ -51,8 +51,8 @@ urlpatterns = [
     # re_path(r'^api/(?P<version>\d\.\d)/users/$', AppUserViewSet.as_view({'get': 'list'})),
 
     # 2 - NamespaceVersioning
-    path('api/users/2.0/', include('authapp.urls', namespace='2.0')),
-    path('api/users/1.0/', include('authapp.urls', namespace='1.0')),
+    # path('api/users/2.0/', include('authapp.urls', namespace='2.0')),
+    # path('api/users/1.0/', include('authapp.urls', namespace='1.0')),
 
 ]
 
