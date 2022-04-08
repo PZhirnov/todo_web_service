@@ -15,7 +15,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.db import router
-from django.urls import path, include
+from django.urls import path, include, re_path
 from rest_framework.routers import DefaultRouter
 from authapp.views import AppUserViewSet
 from mainapp.views import ProjectViewSet, ToDoViewSet,  UserOnProjectViewSet, ExecutorViewSet
@@ -46,6 +46,8 @@ urlpatterns = [
     # path('api/todo/<int:pk>', ToDoViewSet.as_view({'get': 'list'})),
     # path('api/todo/', ToDoViewSet.as_view({'get': 'list'})),
     path('schema/', schema_view),
+    # При отправе запроса http://127.0.0.1:8000/api/2.0/users/ будет использовать другой сериализатор
+    re_path(r'^api/(?P<version>\d\.\d)/users/$', AppUserViewSet.as_view({'get': 'list'}))
 ]
 
 # https://www.django-rest-framework.org/coreapi/schemas/

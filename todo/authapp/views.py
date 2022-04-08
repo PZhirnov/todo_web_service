@@ -27,6 +27,6 @@ class AppUserViewSet(ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
 
     def get_serializer_class(self):
-        if self.request.version == '2.0.1':
+        if self.request.version == '2.0':
             return AppUsersExtendedSerializer
-        AppUsersSerializer
+        return AppUsersSerializer
