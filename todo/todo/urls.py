@@ -22,7 +22,9 @@ from mainapp.views import ProjectViewSet, ToDoViewSet,  UserOnProjectViewSet, Ex
 from authapp.views import AppUserViewSet
 from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
-from rest_framework.schemas import get_schema_view
+from drf_yasg.views import get_schema_view
+from drf_yasg import openapi
+from rest_framework import permissions
 
 
 router = DefaultRouter()
@@ -32,7 +34,16 @@ router.register('todo', ToDoViewSet)
 router.register('users_on_project', UserOnProjectViewSet)
 router.register('executors', ExecutorViewSet)
 
-schema_view = get_schema_view(title="Example API")
+schema_view = get_schema_view(
+    openapi.Info(title='ToDo',
+                 default_version='2.0',
+                 description='Documentation to out project',
+                 contact=openapi.Contact(email="admin@admin.local"),
+                 license=openapi.License(name="MIT License"),
+                 ),
+    public=True,
+    permission_classes=[permissions.AllowAny],
+)
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -45,7 +56,7 @@ urlpatterns = [
     # path('api/users/', AppUserViewSet.as_view()),
     # path('api/todo/<int:pk>', ToDoViewSet.as_view({'get': 'list'})),
     # path('api/todo/', ToDoViewSet.as_view({'get': 'list'})),
-    path('schema/', schema_view),
+    # path('schema/', schema_view),
     # 1 - URLPathVersioning
     # При отправе запроса http://127.0.0.1:8000/api/2.0/users/ будет использовать другой сериализатор
     # re_path(r'^api/(?P<version>\d\.\d)/users/$', AppUserViewSet.as_view({'get': 'list'})),
@@ -54,6 +65,10 @@ urlpatterns = [
     # path('api/users/2.0/', include('authapp.urls', namespace='2.0')),
     # path('api/users/1.0/', include('authapp.urls', namespace='1.0')),
 
+    # Add drf-yasg
+    re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
+    path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
+    path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
 ]
 
 # https://www.django-rest-framework.org/coreapi/schemas/
