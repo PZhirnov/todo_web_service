@@ -16,6 +16,7 @@ Including another URLconf
 from django.contrib import admin
 from django.db import router
 from django.urls import path, include, re_path
+from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
 from authapp.views import AppUserViewSet
 from mainapp.views import ProjectViewSet, ToDoViewSet,  UserOnProjectViewSet, ExecutorViewSet
@@ -25,6 +26,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
+from mainapp.views import SwaggerTemplateView
 
 
 router = DefaultRouter()
@@ -69,6 +71,13 @@ urlpatterns = [
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
+    #
+    path('swagger-ui/', SwaggerTemplateView.as_view(), name='swagger-ui'),
+    path('openapi', get_schema_view(openapi.Info(title='MyProject',
+                                                 default_version='1.0',
+                                                 description='API for Project',
+                                                 version='1.0.0')).as_view(),
+         name='openapi-schema'),
 ]
 
 # https://www.django-rest-framework.org/coreapi/schemas/

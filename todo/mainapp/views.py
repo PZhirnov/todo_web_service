@@ -13,6 +13,7 @@ from rest_framework.viewsets import ModelViewSet, GenericViewSet
 from rest_framework.pagination import LimitOffsetPagination
 from mainapp.filters import ProjectFilter
 from datetime import datetime, timedelta
+from django.views.generic import TemplateView
 
 # Create your views here.
 
@@ -123,3 +124,10 @@ class UserOnProjectViewSet(ModelViewSet):
 class ExecutorViewSet(ModelViewSet):
     queryset = Executor.objects.all()
     serializer_class = ExecutorToDoModelSerializer
+
+
+class SwaggerTemplateView(TemplateView):
+    template_name = 'swagger-ui.html'
+    extra_context = {'schema_url': 'openapi-schema'}
+
+
