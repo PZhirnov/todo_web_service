@@ -26,7 +26,7 @@ from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
-from mainapp.views import SwaggerTemplateView
+from mainapp.views import SwaggerTemplateView, RedocTemplateView
 
 
 router = DefaultRouter()
@@ -71,13 +71,15 @@ urlpatterns = [
     re_path(r'^swagger(?P<format>\.json|\.yaml)$', schema_view.without_ui(cache_timeout=0), name='schema-json'),
     path('swagger/', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
     path('redoc/', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
-    #
-    path('swagger-ui/', SwaggerTemplateView.as_view(), name='swagger-ui'),
+    # Решение к п.3 урока №9
     path('openapi', get_schema_view(openapi.Info(title='MyProject',
-                                                 default_version='1.0',
+                                                 default_version='2.0',
                                                  description='API for Project',
-                                                 version='1.0.0')).as_view(),
-         name='openapi-schema'),
+                                                 version='2.0')).as_view(), name='openapi-schema'),
+    # Swagger
+    path('swagger-ui/', SwaggerTemplateView.as_view(), name='swagger-ui'),
+    # ReDoc
+    path('redoc-ui/', RedocTemplateView.as_view(), name='redoc-ui'),
 ]
 
 # https://www.django-rest-framework.org/coreapi/schemas/

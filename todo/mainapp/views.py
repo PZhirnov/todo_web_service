@@ -131,3 +131,8 @@ class SwaggerTemplateView(TemplateView):
     extra_context = {'schema_url': 'openapi-schema'}
 
 
+class RedocTemplateView(TemplateView):
+    template_name = 'redoc.html'
+    extra_context = {'schema_url': 'openapi-schema'}
+
+
