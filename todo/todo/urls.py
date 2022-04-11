@@ -83,7 +83,7 @@ urlpatterns = [
     path('redoc-ui/', RedocTemplateView.as_view(), name='redoc-ui'),
 
     #GraphQl
-    path('graphql/', GraphQLView.as_view(graphql=True)),
+    path('graphql/', GraphQLView.as_view(graphiql=True)),
 ]
 
 # https://www.django-rest-framework.org/coreapi/schemas/
