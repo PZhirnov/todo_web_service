@@ -27,6 +27,7 @@ from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 from mainapp.views import SwaggerTemplateView, RedocTemplateView
+from graphene_django.views import GraphQLView
 
 
 router = DefaultRouter()
@@ -80,6 +81,9 @@ urlpatterns = [
     path('swagger-ui/', SwaggerTemplateView.as_view(), name='swagger-ui'),
     # ReDoc
     path('redoc-ui/', RedocTemplateView.as_view(), name='redoc-ui'),
+
+    #GraphQl
+    path('graphql/', GraphQLView.as_view(graphql=True)),
 ]
 
 # https://www.django-rest-framework.org/coreapi/schemas/
