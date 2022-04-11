@@ -7,7 +7,7 @@ import graphene
 from graphene_django import DjangoObjectType
 from mainapp.models import Project, ToDo, UserOnProject, Executor
 from authapp.models import User
-from datetime import datetime
+from datetime import datetime, timedelta
 from django.db.models import Q
 
 
@@ -54,6 +54,8 @@ class Query(graphene.ObjectType):
     query_datetime = graphene.String(default_value=datetime.now())
     # Поиск сотрудника по имени или фамилии
     search_user = graphene.List(UserType, search_text=graphene.String(required=True))
+    # Вывод топ 5 проектов, которые будут закрыты в ближайшее время
+    todo_deadline = graphene.List(ToDoType, days_from_now=graphene.Int(required=True))
 
     def resolve_all_projects(root, info):
         return Project.objects.all()
@@ -94,6 +96,15 @@ class Query(graphene.ObjectType):
                                    | Q(first_name__contains=search_text)
                                    | Q(last_name__contains=search_text))
 
+    def resolve_todo_deadline(self, info, days_from_now=5):
+        """
+            выводит все todo до заданного периода deadline в днях
+        """
+        deadline_date = datetime.combine(datetime.now().date() + timedelta(days=days_from_now), datetime.min.time())
+        print(deadline_date)
+        return ToDo.objects.filter(is_close=False,
+                                   is_active=True,
+                                   scheduled_date__lte=deadline_date).order_by('-scheduled_date')
 
 
 schema = graphene.Schema(query=Query)
@@ -239,7 +250,29 @@ schema = graphene.Schema(query=Query)
   
 }
 
+10. Вывод информацию по ToDo до заданного deadline в днях от текущей даты
 
+{
+	todoDeadline(daysFromNow: 30) {
+    id
+    title
+    scheduledDate
+    isActive
+    isClose
+    projectId{
+      id
+      name
+    }
+    userOnTodo{
+      user{
+        id
+        username
+      }
+    }
+    
+  }
+  
+}
 
 """
 
