@@ -23,6 +23,9 @@ const ProjectItem = ({project}) => {
            <td>
                 <Link to={`projects/${project.id}/${project.name}/`} class="btn btn-dark">Открыть задачи</Link>
            </td>
+           <td>
+               <button type="button">Удалить проект</button>
+           </td>
        </tr>
    )
 }
@@ -51,6 +54,9 @@ const ProjectList = ({projects}) => {
                 </th>
                 <th>
                     Задачи на проекте
+                </th>
+                <th>
+                    Удалить проект
                 </th>
                 {projects.map((project) => <ProjectItem project={project} />)}
             </table>

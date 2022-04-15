@@ -23,7 +23,7 @@ from django.views.generic import TemplateView
 
 
 class ProjectLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 3
+    default_limit = 100
 
 
 class ProjectViewSet(ModelViewSet):
@@ -50,7 +50,7 @@ class ProjectViewSet(ModelViewSet):
 #  для постраничного вывода установить размер страницы 20.
 
 class ToDoLimitOffsetPagination(LimitOffsetPagination):
-    default_limit = 20
+    default_limit = 100
 
 
 def get_datetime(data_string: str, add_days=0):
@@ -134,5 +134,3 @@ class SwaggerTemplateView(TemplateView):
 class RedocTemplateView(TemplateView):
     template_name = 'redoc.html'
     extra_context = {'schema_url': 'openapi-schema'}
-
-
