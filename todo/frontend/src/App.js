@@ -6,9 +6,11 @@ import ProjectList from './components/Projects';
 import ToDoList from './components/ToDo';
 import ProjectToDoList from './components/ToDoList';
 import LoginForm from './components/Auth';
+import ProjectForm from './components/ProjectForm';
 import axios from 'axios';
 import {HashRouter, Route, Router, Routes, Link, Switch, Redirect, BrowserRouter} from 'react-router-dom';
 import Cookies from 'universal-cookie';
+
 
 
 const NotFound404 = ({ location }) => {
@@ -126,6 +128,31 @@ class App extends React.Component {
     })
   }
 
+  // Удаление проекта по нажатию кнопки
+  deleteProject(id) {
+    const headers = this.get_headers()
+    axios.delete(`${this.url_api['projects']}${id}/`, {headers})
+      .then(response => {
+        console.log(response.data)
+        this.setState({projects: this.state.projects.filter((item) => item.id !== id)})
+        }
+    ).catch(error => console.log(error))
+  }
+
+  // Создание проекта
+  createProject(data) {
+    console.log('create project')
+    console.log(data)
+    const headers = this.get_headers()
+    axios.post(`${this.url_api['projects']}`, data, {headers, headers})
+      .then(response => {
+        console.log(response.data)
+        }
+    ).catch(error => console.log(error))
+
+  }
+
+
   componentDidMount() {
     this.get_token_from_storage()
     this.load_data()
@@ -150,7 +177,20 @@ class App extends React.Component {
             </nav>
             <Switch>
               <Route exact path='/' component={() => <UsersList users={this.state.users} />} />
-              <Route exact path='/projects' component={() => <ProjectList projects={this.state.projects} />} />
+              
+
+
+              <Route exact path='/projects' component={
+                () => <ProjectList 
+                        projects={this.state.projects} 
+                        deleteProject={(id) =>this.deleteProject(id)}  
+                      />
+                } />
+              
+              <Route exact path='/projects/create' component={() => <ProjectForm createProject={(data) => this.createProject(data)} users={this.state.users}/>}/>
+              
+
+
               <Route exact path='/tasks' component={() => <ToDoList todo_items={this.state.todo_items} />} />
               
               { this.is_authenticated() == '' ? <Route exact path='/login' 

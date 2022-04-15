@@ -11,7 +11,13 @@ class ProjectSerializerBase(serializers.ModelSerializer):
     class Meta:
         model = Project
         fields = '__all__'
-        extra_kwargs = {'user_on_project': {'required': False}}
+        # extra_kwargs = {'user_on_project': {'required': False}}
+
+    # def get_field_names(self, declared_fields, info):
+    #     s = super(ProjectSerializerBase, self).get_field_names(declared_fields, info)
+    #     print(info)
+    #     return s
+
 
 
 class ProjectModelSerializer(serializers.ModelSerializer):

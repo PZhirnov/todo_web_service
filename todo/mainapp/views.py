@@ -6,7 +6,7 @@ from rest_framework import mixins, status, permissions
 from rest_framework.renderers import JSONRenderer
 from rest_framework.response import Response
 
-from .models import Project, ToDo, UserOnProject, Executor
+from .models import Project, ToDo, UserOnProject, Executor, User
 from .serializers import ProjectModelSerializer, ProjectSerializerBase,\
     TodoModelSerializer, UserOnProjectSerializer, ExecutorToDoModelSerializer, TodoModelSerializerBase
 from rest_framework.viewsets import ModelViewSet, GenericViewSet
@@ -27,19 +27,35 @@ class ProjectLimitOffsetPagination(LimitOffsetPagination):
 
 
 class ProjectViewSet(ModelViewSet):
-    # renderer_classes = [JSONRenderer]
+    renderer_classes = [JSONRenderer]
     queryset = Project.objects.all()
-    # serializer_class = ProjectModelSerializer
-    # filterset_fields = ['name']
+    serializer_class = ProjectModelSerializer
+    filterset_fields = ['name']
     filterset_class = ProjectFilter
     pagination_class = ProjectLimitOffsetPagination
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
+    
+    def create(self, request, *args, **kwargs):
+        new_response = super(ProjectViewSet, self).create(request, *args, **kwargs)
+        project = Project.objects.get(id=new_response.data['id'])
+        users_id_on_project = request.data['user_on_project']
+        if users_id_on_project:
+            for user_id in users_id_on_project:
+                user = User.objects.get(id=user_id)
+                project.user_on_project.add(user)
+        project_serializer = ProjectModelSerializer(project)
+        new_response.data = project_serializer.data
+        print(project_serializer.data)
+        return new_response
+
 
     def get_serializer_class(self):
         '''
            ProjectSerializerBase используется для сохранения/обновления данных
         '''
-        if self.request.method in ['GET']:
+        # print(self.request.data)
+        print(self.request.method)
+        if self.request.method == 'GET':
             return ProjectModelSerializer
         return ProjectSerializerBase
 
