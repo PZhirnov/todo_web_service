@@ -7,6 +7,7 @@ import ToDoList from './components/ToDo';
 import ProjectToDoList from './components/ToDoList';
 import LoginForm from './components/Auth';
 import ProjectForm from './components/ProjectForm';
+import ToDoForm from './components/ToDoForm';
 import axios from 'axios';
 import {HashRouter, Route, Router, Routes, Link, Switch, Redirect, BrowserRouter} from 'react-router-dom';
 import Cookies from 'universal-cookie';
@@ -21,6 +22,14 @@ const NotFound404 = ({ location }) => {
   )
 } 
 
+const login = ({ location }) => {
+  return (
+    <div>
+      <h1>Для </h1>
+    </div>
+  )
+} 
+
 
 class App extends React.Component {
   constructor(props) {
@@ -31,6 +40,7 @@ class App extends React.Component {
       'users': this.url_source + '/api/users/',
       'projects': this.url_source + '/api/projects/',
       'todo': this.url_source + '/api/todo/',
+      'todo_base': this.url_source + '/api/todo/base/',
     }
       
     this.state = {
@@ -105,6 +115,7 @@ class App extends React.Component {
     axios.get(this.url_api['projects'], {headers})
     .then(
       response => {
+        console.log(response.data.results)
         this.setState({
           'projects': response.data.results
         }
@@ -121,13 +132,16 @@ class App extends React.Component {
       {
         'todo_items': response.data.results
       }
-    ) 
+    )
+    console.log(this.state.todo_items)
     }).catch(error => {
       console.log(error)
       this.setState({'todo_items': []})
     })
   }
 
+
+  // --- Проекты
   // Удаление проекта по нажатию кнопки
   deleteProject(id) {
     const headers = this.get_headers()
@@ -146,11 +160,63 @@ class App extends React.Component {
     const headers = this.get_headers()
     axios.post(`${this.url_api['projects']}`, data, {headers, headers})
       .then(response => {
+        let newProject = response.data;
+        this.setState ({projects: [...this.state.projects, newProject]})})
+        .catch(error => console.log(error))
+  }
+
+  // Редактирование проекта
+  editProject(id, data) {
+    console.log('edit project')
+    console.log(data)
+    const headers = this.get_headers()
+    axios.put(`${this.url_api['projects']}${id}/`, data, {headers, headers})
+      .then(response => {
+        //let newProject = response.data;
+        //this.setState ({projects: this.state.projects})
+        this.load_data();
+      })
+        .catch(error => console.log(error))
+  }
+
+  // --- ToDo ---
+  deleteToDo(id) {
+    const headers = this.get_headers();
+    console.log(`будет удален ${id}`)
+    axios.delete(`${this.url_api['todo_base']}${id}/`, {headers})
+      .then(response => {
         console.log(response.data)
+        this.setState({todo_items: this.state.todo_items.filter((item) => item.id !== id)})
         }
     ).catch(error => console.log(error))
 
   }
+
+  createToDo(data) {
+    const headers = this.get_headers();
+    console.log(`создание todo ${data}`)
+    axios.post(`${this.url_api['todo']}`, data, {headers, headers})
+      .then(response => {
+        let newToDo = response.data;
+        console.log(response.data)
+        this.setState ({todo_items: [...this.state.todo_items, newToDo]})})
+        .catch(error => console.log(error))
+    console.log(this.state.todo_items)
+  }
+
+  editToDo(id, data) {
+    const headers = this.get_headers();
+    console.log(`создание todo ${data}`)
+    console.log(data)
+    // ДОПИСАТЬ КОД ОТПРАВКИ ЗАПРОСА
+    axios.put(`${this.url_api['todo']}${id}/`, data, {headers, headers})
+      .then(response => {
+        //this.load_data();
+      })
+      .catch(error => console.log(error))
+    console.log(this.state.todo_items)
+  }
+
 
 
   componentDidMount() {
@@ -165,11 +231,12 @@ class App extends React.Component {
           Приложение ToDo:       
           <BrowserRouter>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              <h1>Пользователь: {this.state.username}</h1>
+              
               {this.is_authenticated() ? <button onClick={ () => this.logout()}>Выход</button> : <Link to='/login'>Вход</Link>}              
               {this.is_authenticated() ? 
               <ul>
-                <li><Link to='/'>Пользователи</Link></li> 
+                <h1>Пользователь: {this.state.username}</h1>
+                <li><Link to='/users'>Пользователи</Link></li> 
                 <li><Link to='/projects'>Проекты</Link></li>
                 <li><Link to='/tasks'>Задачи</Link></li>
               </ul>
@@ -177,28 +244,61 @@ class App extends React.Component {
             </nav>
             <Switch>
               <Route exact path='/' component={() => <UsersList users={this.state.users} />} />
+              <Route exact path='/users' component={() => <UsersList users={this.state.users} />} />
               
-
-
               <Route exact path='/projects' component={
                 () => <ProjectList 
                         projects={this.state.projects} 
-                        deleteProject={(id) =>this.deleteProject(id)}  
+                        deleteProject={(id) => this.deleteProject(id)}  
                       />
                 } />
               
               <Route exact path='/projects/create' component={() => <ProjectForm createProject={(data) => this.createProject(data)} users={this.state.users}/>}/>
               
+              <Route exact path='/projects/:id/' component={() => <ProjectForm editProject={
+                (id, data) => this.editProject(id, data)} users={this.state.users} edit={true} projects={this.state.projects}/> 
+                } />
 
 
-              <Route exact path='/tasks' component={() => <ToDoList todo_items={this.state.todo_items} />} />
+
+              <Route exact path='/tasks' component={() => <ToDoList todo_items={this.state.todo_items} projects={this.state.projects} deleteToDo={(id) => this.deleteToDo(id)}/>} />
               
+              <Route exact path='/projects/:id/tasks/create' component={
+                () => <ToDoForm 
+                        createToDo={(data) => this.createToDo(data)}
+                        editToDo={(id, data) => this.editToDo(id, data)} 
+                        usersOnProject = {this.state.userOnProject}
+                        projects={this.state.projects}
+                        edit={false}
+                      />
+                      } 
+              />
+
+              <Route exact path='/tasks/:id' component={
+                () => <ToDoForm
+                        createToDo={(data) => this.createToDo(data)} 
+                        editToDo={(id, data) => this.editToDo(id, data)} 
+                        usersOnProject = {this.state.userOnProject}
+                        todo = {this.state.todo_items}
+                        projects={this.state.projects}
+                        edit={true}
+                      />
+                      } 
+              />
+                
+                
+              {/* <Route exact path='/projects/tasks/:id/:title/' component={() => <ToDoForm createTodo={(data) => this.createTodo(data)} usersOnProject = {this.state.usersOnProject}/>} /> */}
+
+
+
+
+
+
+
               { this.is_authenticated() == '' ? <Route exact path='/login' 
               component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)} />} /> : ''}
               
-              <Route path='/projects/:id/:title/' >
-                <ProjectToDoList todo_items={this.state.todo_items} />
-              </Route>
+              
               <Route component={NotFound404} />
             </Switch>
           </BrowserRouter>

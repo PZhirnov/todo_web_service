@@ -15,19 +15,24 @@ const ProjectItem = ({project, deleteProject}) => {
                {project.description}
            </td>
            <td>
-               {project.hrefRepo}
+               <a href={project.hrefRepo} target='_blank'>{project.hrefRepo}</a>
            </td>
            <td>
                {project.addDate}
            </td>
            <td>
-                <Link to={`projects/${project.id}/${project.name}/`} class="btn btn-dark">Открыть задачи</Link>
+               {project.userOnProject.map((user) => user.username).join(', \n')}
+           </td>
+           <td>
+                <Link to={`projects/tasks/${project.id}/${project.name}/`} class="btn btn-dark">Список задач</Link>
+                <Link to={`projects/${project.id}/tasks/create/`} class="btn btn-dark">Новая</Link>
            </td>
            <td>
                <button type="button" onClick={() => deleteProject(project.id)} >Удалить проект</button>
            </td>
            <td>
-               <button type="button" onClick={() => console.log('edit')} >Редактировать</button>
+               {/* <button type="button" onClick={() => console.log('edit')} >Редактировать</button> */}
+               <Link to={`projects/${project.id}/`} class="btn btn-dark">Редактировать проект</Link>
            </td>
 
        </tr>
@@ -62,22 +67,25 @@ const ProjectList = ({projects, deleteProject}) => {
                     id
                 </th>
                 <th>
-                    Наименование проекта
+                    Name
                 </th>
                 <th>
-                    Описание проекта
+                    Description
                 </th>
                 <th>
-                    Ссылка на репозиторий
+                    Link
                 </th>
                 <th>
-                    Дата добавления проекта
+                    Add date
                 </th>
                 <th>
-                    Задачи на проекте
+                    Users count
                 </th>
                 <th>
-                    Удалить проект
+                    Tasks
+                </th>
+                <th>
+                    Delete
                 </th>
                 {projects.map((project) => <ProjectItem project={project} deleteProject={deleteProject}/>)}
             </table>
