@@ -15,10 +15,13 @@ const ToDoItem = ({todo}) => {
                 {todo.description}
             </td>
             <td>
-                {todo.is_active}
+                {todo.isActive}
             </td>
             <td>
-                {todo.add_date}
+                {todo.isClose}
+            </td>
+            <td>
+                {todo.addDate}
             </td>
         </tr>
     )
@@ -27,7 +30,7 @@ const ToDoItem = ({todo}) => {
 const ProjectToDoList = ({todo_items}) => {
     let {id} = useParams();
     let {title} = useParams();
-    let filtered_Items = todo_items.filter((todo) => todo.project_id == id)
+    let filtered_Items = todo_items.filter((todo) => todo.projectId.id == id)
     console.log(`данные - ${id} ${todo_items}`)
     return (
         <div>

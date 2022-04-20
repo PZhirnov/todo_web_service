@@ -24,22 +24,19 @@ const ProjectItem = ({project, deleteProject}) => {
                {project.userOnProject.map((user) => user.username).join(', \n')}
            </td>
            <td>
-                <Link to={`projects/tasks/${project.id}/${project.name}/`} class="btn btn-dark">Список задач</Link>
+                <Link to={`projects/tasks/${project.id}/${project.name}/`} class="btn btn-dark">Список</Link>
                 <Link to={`projects/${project.id}/tasks/create/`} class="btn btn-dark">Новая</Link>
            </td>
            <td>
-               <button type="button" onClick={() => deleteProject(project.id)} >Удалить проект</button>
-           </td>
-           <td>
-               {/* <button type="button" onClick={() => console.log('edit')} >Редактировать</button> */}
-               <Link to={`projects/${project.id}/`} class="btn btn-dark">Редактировать проект</Link>
+               <button type="button" onClick={() => deleteProject(project.id)} class="btn_action">Удалить</button>
+               <Link to={`projects/${project.id}/`} class="btn btn-dark" >Редактировать</Link>
            </td>
 
        </tr>
    )
 }
 
-const ProjectList = ({projects, deleteProject}) => {
+const ProjectList = ({projects, deleteProject, searchProject}) => {
 
     console.log(projects)
     
@@ -49,10 +46,24 @@ const ProjectList = ({projects, deleteProject}) => {
         let createBtn = document.getElementById("createBtn");
         console.log('events');
         console.log(createBtn)
-        // document.location.href = `/projects/${nameAction}/`
-        // if (createBtn) {
-        //     createBtn.addEventListener("click", () => {console.log('create')})
-        // }
+
+    }
+
+    function docLocation(nameAction) {
+        // Обработка перехода на форму создания проекта
+        let createBtn = document.getElementById("createBtn");
+        console.log('events');
+        console.log(createBtn)
+
+    }
+
+    function search() {
+        // Обработка перехода на форму создания проекта
+        let fieldSearch = document.querySelector(".fieldSearch");
+        console.log(fieldSearch.value);
+        let res = searchProject(fieldSearch.value)
+
+
     }
 
 
@@ -61,37 +72,46 @@ const ProjectList = ({projects, deleteProject}) => {
         <div>
             <h1>Список проектов:</h1>
             {/* <button type="button" id="createBtn" onClick={() => docLocation('create')}>Создать проект</button> */}
-            <Link to='/projects/create/' class='btn'>Создать проект</Link>
+            <div class = "search">
+                <label for="fieldSearch">Введите наименование проекта: </label>
+                <input type="text" class="fieldSearch"></input>
+                <button type="button" onClick={(event) => search()} class='btn_action'>Найти</button>
+            </div>
+                
+            
             <table>
                 <th>
                     id
                 </th>
                 <th>
-                    Name
+                    Наименование 
                 </th>
                 <th>
-                    Description
+                    Описание
                 </th>
                 <th>
-                    Link
+                    Ссылка
                 </th>
                 <th>
-                    Add date
+                    Дата добавления
                 </th>
                 <th>
-                    Users count
+                    Пользователи
                 </th>
                 <th>
-                    Tasks
+                    Задачи
                 </th>
                 <th>
-                    Delete
+                    Действия
                 </th>
                 {projects.map((project) => <ProjectItem project={project} deleteProject={deleteProject}/>)}
             </table>
             {
                 //addEvents()
             }
+            <div class="createBtn">
+                <Link to='/projects/create/' class='createBtn'> + Создать проект</Link>
+            </div>
         </div>
             
     )

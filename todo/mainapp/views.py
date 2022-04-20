@@ -29,12 +29,23 @@ class ProjectLimitOffsetPagination(LimitOffsetPagination):
 
 class ProjectViewSet(ModelViewSet):
     # renderer_classes = [JSONRenderer]
-    queryset = Project.objects.all()
+    # queryset = Project.objects.all()
     serializer_class = ProjectModelSerializer
     filterset_fields = ['name']
     filterset_class = ProjectFilter
     # pagination_class = ProjectLimitOffsetPagination
     permission_classes = [permissions.IsAuthenticated]
+    
+    def get_queryset(self):
+        print(self.request.query_params)
+        if self.request.query_params:
+            search_char = self.request.query_params['search']
+            #  В SQLLIte icontains не работает, но в MySQL все отлично
+            queryset = Project.objects.filter(name__icontains=search_char)
+        else:
+            queryset = Project.objects.all()
+        print(queryset)
+        return queryset
 
     def create(self, request, *args, **kwargs):
         new_response = super(ProjectViewSet, self).create(request, *args, **kwargs)
@@ -146,6 +157,45 @@ class ToDoViewSet(ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         new_response = super(ToDoViewSet, self).update(request, *args, **kwargs)
+        print(request.data)
+
+        # Получили ToDo по его id
+        todo = ToDo.objects.get(id=new_response.data['id'])
+        # Получили пользователей, которые были добавлены на проект ранее
+        users_on_todo_from_bd = Executor.objects.filter(todo_id=todo.id)
+
+        # Список id пользователей, которые уже есть в базе
+        print(users_on_todo_from_bd.values('id', 'user_on_project_id'))
+        users_on_todo_id_from_bd = list(map(lambda x: x['user_on_project_id'],
+                                          users_on_todo_from_bd.values('id', 'user_on_project_id')))
+
+        # Список пользователей из запроса на обновление
+        print(request.data['user_on_todo'])
+        users_id_from_request = list(map(lambda x: int(x['id']), request.data['user_on_todo']))
+
+        # Удалили пользователей из БД, которые были удалены пользователем с проекта
+        users_id_list_for_delete = list(set(users_on_todo_id_from_bd) - set(users_id_from_request))
+        users_on_todo_from_bd.filter(user_on_project_id__in=users_id_list_for_delete).delete()
+
+        # Добавили на проект пользователей из запроса, которые ранее не были на него запланированы
+        users_id_list_for_add = list(set(users_id_from_request) - set(users_on_todo_id_from_bd))
+        users_on_project = UserOnProject.objects.filter(id__in=users_id_list_for_add)
+        todo.user_on_todo.add(*users_on_project)
+
+        # Завершаем работу с данными и возвращаем ответ
+        project_serializer = TodoModelSerializerBase(todo)
+        new_response.data = project_serializer.data
+        print(project_serializer.data)
+
+
+
+
+
+
+
+
+
+
         print(new_response.data)
         return new_response
 

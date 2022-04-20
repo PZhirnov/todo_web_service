@@ -122,4 +122,18 @@ input {
   border-color: black;
 }
 
+.btn-dark {
+  display: inline;
+  margin: 5px;
+  border-width: 1px;
+  border-color: black;
+}
+
+.createBtn {
+  margin-top: 35px;
+  text-align-last: start;
+  font-weight: bold;
+  font-size: larger;
+  color: azure;
+}
 

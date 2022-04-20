@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import Cookies from 'universal-cookie';
+import { toHaveDisplayValue } from "@testing-library/jest-dom/dist/matchers";
 
 // Функция получает индексы выбранных проектов из массива select
 function getSelectedIndexes (oListbox)
@@ -50,33 +51,26 @@ class ToDoForm extends React.Component {
             let project = props.projects.filter((project) => project.id == todo.projectId['id'])[0]
             // console.log(todo)
             this.state = todo
-            this.state['projectInfo'] = project
+            this.otherData['projectInfo'] = project
+            // this.userOnTodoId = todo.userOnTodo.map((user) => user.id)
             this.state['usersOnProject'] = []
-            // this.load_data()
-            //console.log('данные:')
-            //console.log(this.state)    
-            // // Выделим пользователей в select
-            // let usersOnProjectId = project['userOnProject']
-            // //console.log(usersList)
-            // //SelectUsersOnProject(usersList, usersOnProjectId)
 
         } else {
             let id_project = document.location.pathname.replaceAll('projects/', '').replaceAll('/', '').replaceAll('taskscreate', '').trim()
             let project = props.projects.filter((item) => item.id == id_project)[0]
-            //console.log(project)
-            //console.log(project.id)
-            this.state = {  actualDate: '',
-                            addDate: '', 
-                            description: '', 
-                            isActive: true, 
-                            isClose: false, 
-                            lastModified: '', 
-                            projectId: {'id':project.id, 'name': project.name}, 
-                            scheduledDate: '', 
-                            title: '', 
-                            userOnTodo: [],
-                        }    
-        
+            this.otherData['projectInfo'] = project
+            this.state = {  'actualDate': '',
+                            'addDate': '', 
+                            'description': '', 
+                            'isActive': true, 
+                            'isClose': false, 
+                            'lastModified': '', 
+                            'projectId': {'id':project.id, 'name': project.name}, 
+                            'scheduledDate': '', 
+                            'title': '', 
+                            'userOnTodo': [],
+                            'usersOnProject': []
+                        }
         }    
     }
 
@@ -99,18 +93,20 @@ class ToDoForm extends React.Component {
         let availableUsers = `${this.url_api['availableUsers']}${this.state.projectId.id}`
         axios.get(availableUsers, {headers})
         .then(response => {
-            //console.log('данные')
-            //console.log(response.data)
-            this.otherData(
-            {
-                'usersOnProject': response.data
-            }
-            )
+            console.log('данные')
+            console.log(response.data)
+            this.setState({
+                    'usersOnProject': response.data
+                }
+            ) 
             console.log('данные load')
             console.log(this.state) 
         }).catch(error => {
-          console.log(error)
-          this.otherData({usersOnProject: []})
+            console.log(error)
+            this.setState({
+                'usersOnProject': []
+            }
+            ) 
         })
         
 
@@ -119,11 +115,6 @@ class ToDoForm extends React.Component {
 
     handleChange(event) {
         console.log(event.target.value)
-        // // Получим массив id выбранных пользователей, чтобы потом добавить их на проект
-        // let selectedUsers = document.getElementById('usersOnProject')
-        // let idUsers = getSelectedId(selectedUsers)
-        //console.log(event.target.name);
-        //console.log(event.target.value);
         let value = event.target.value;
         if (event.target.type == 'checkbox') {
             value = event.target.checked;
@@ -132,62 +123,81 @@ class ToDoForm extends React.Component {
         this.setState(
             {
                 [event.target.name]: value,
-                //userOnProject: idUsers,
             }
         );
         console.log(this.state);
-        // alert(this.token)
-        // console.log(this.state.userOnProject);
+
     }
+
+    // Функция проверяет наличие элемента в массиве
+    containsEl(arr, elem, from=null) {
+        return arr.indexOf(elem, from) != -1;
+    }
+
+
+    checkOnToDo () {
+        let usersInput = document.querySelector('.userLi')
+        let allInput = usersInput.getElementsByTagName('input')
+        console.log(allInput)
+        //allInput.map((el) => {this.containsEl(this.state.userOnTodo, el.id) ? el.setAttribute("checked", "checked") : ''})
+    }
+
 
     selectExecutor(event) {
         console.log(event.target.id)
         // Выбираем элемент списка li, чтобы в нем изменить класс для подсветки выбранного пользователя
         let curUser = document.querySelector('.u' + event.target.id)
         let input = curUser.getElementsByTagName('input')[0]
+        console.log(input)
         let userCheckedCss = input.checked ? " userChecked" : ""
+        //input.checked ? input.removeAttribute("checked") : input.setAttribute("checked", "checked")
         curUser.setAttribute("class", "userLi u" + event.target.id + userCheckedCss)
         // Обновляем данные в параметре userOnTodo
         let UsersTodo = document.querySelectorAll('.userLi')
         //console.log(UsersTodo)
         this.state.userOnTodo = []
+        // this.userOnTodoId = [] // this.state.userOnTodo.map((user) => user.id)
         let s = UsersTodo.forEach((element) => element.childNodes[1].checked ? this.state.userOnTodo.push({id: element.childNodes[1].id, username: element.childNodes[0].data}) : null)
         console.log(this.state.userOnTodo)
+        this.checkOnToDo()
     }
 
-
-
-
     handleSubmit(event) {
-        let arrayData = this.state
-        //delete arrayData['lastModified']
-        //delete arrayData['projectInfo']
-        //delete arrayData['usersOnProject']
-        // arrayData.projectId = this.state.projectInfo.id
-        //console.log('Массив:')
-        //console.log(arrayData);
-        //this.props.createToDo(arrayData)
-        //event.preventDefault()
+        // Тут сделал в 'лоб' нужные данные для отправки, т.к. не успевал
+        console.log(this.state.userOnTodo)
+        let arrayData = {   'actualDate': this.state.actualDate,
+                            'addDate': this.state.addDate, 
+                            'description': this.state.description, 
+                            'isActive': this.state.isActive, 
+                            'isClose': this.state.isClose, 
+                            'projectId': this.state.projectId.id, 
+                            'scheduledDate': this.state.scheduledDate, 
+                            'title': this.state.title, 
+                            'userOnTodo': this.state.userOnTodo,
+                        }    
+
         if (!this.props.edit) {
             this.props.createToDo(arrayData)
         } else {
             console.log(this.state.id)
-            this.props.editToDo(arrayData.id, arrayData)
+            this.props.editToDo(this.state.id, arrayData)
         }
         event.preventDefault()
     }
 
     componentDidMount() {
         this.load_data()
+        // this.checkOnToDo()
     }
 
     render() {
         console.log('render');
         console.log(this.state);
+        console.log(this.otherData)
         return(
             <form onSubmit={(event) => this.handleSubmit(event)}>
                 <div>
-                    <h2>{this.props.edit ? 'Редактирование задачи' : 'Создание новой задачи'} для проекта: {this.otherData.projectInfo.name} ({this.state.projectId.id})</h2>
+                    <h2>{this.props.edit ? 'Редактирование задачи' : 'Создание новой задачи'} для проекта: {this.otherData.projectInfo.name} ({this.otherData.projectInfo.id})</h2>
                     
                 </div>
                 <div>
@@ -221,15 +231,17 @@ class ToDoForm extends React.Component {
                     <input type='checkbox' className="form-control" name="isClose" value={this.state.isClose} onClick={(event) => this.handleChange(event)}/> 
                 </div>
                 <div>
-                    
+                    {/* {this.otherData.usersOnProject[0].id} */}
                     <label>Доступные пользователи на проекте:</label>
                     <ul>
-                        {this.otherData.usersOnProject.map(
+                        {this.state.usersOnProject.map(
                             (curUser) => (
                                 <>  
-                                <li class={'userLi u' + curUser.id}>{curUser.user.username}
-                                        <input type='checkbox' id={curUser.id} onClick={(event) => this.selectExecutor(event)}></input>
-                                    </li> </>
+                                    <li class={'userLi u' + curUser.id + (this.containsEl(this.state.userOnTodo.map((el) => el.id), curUser.id) ? ' userChecked' : '')}>{curUser.user.username}
+                                        <input type='checkbox' id={curUser.id} onChange={(event) => this.selectExecutor(event)} class='inputUser'>
+                                        </input>
+                                    </li> 
+                                </>
                                 )
                             )}
                     </ul>
