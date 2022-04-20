@@ -140,7 +140,6 @@ class App extends React.Component {
     })
   }
 
-
   // --- Проекты
   // Удаление проекта по нажатию кнопки
   deleteProject(id) {
@@ -230,7 +229,6 @@ class App extends React.Component {
   }
 
 
-
   componentDidMount() {
     this.get_token_from_storage()
     this.load_data()
@@ -271,8 +269,6 @@ class App extends React.Component {
               <Route exact path='/projects/:id/' component={() => <ProjectForm editProject={
                 (id, data) => this.editProject(id, data)} users={this.state.users} edit={true} projects={this.state.projects}/> 
                 } />
-
-
 
               <Route exact path='/tasks' component={() => <ToDoList todo_items={this.state.todo_items} 
                                                             projects={this.state.projects} deleteToDo={(id) => this.deleteToDo(id)}/>} />

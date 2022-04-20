@@ -43,9 +43,7 @@ class ProjectForm extends React.Component {
 
         } else {
             this.state = {name: '', description: '', hrefRepo: '', addDate: '', lastModified: '', userOnProject: []}    
-        }
-
-        
+        }  
     }
 
     handleChange(event) {
@@ -107,10 +105,6 @@ class ProjectForm extends React.Component {
                             <option value={user.id} onClick={(event) => this.handleChange(event)}>{user.username}</option>)}
                     
                     </select>
-
-                    
-
-
                 </div>
                 
                 <input type="submit" className="btn btn-primary" value="Сохранить" />

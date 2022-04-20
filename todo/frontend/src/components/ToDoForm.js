@@ -108,9 +108,6 @@ class ToDoForm extends React.Component {
             }
             ) 
         })
-        
-
-
     }
 
     handleChange(event) {
