@@ -186,16 +186,6 @@ class ToDoViewSet(ModelViewSet):
         project_serializer = TodoModelSerializerBase(todo)
         new_response.data = project_serializer.data
         print(project_serializer.data)
-
-
-
-
-
-
-
-
-
-
         print(new_response.data)
         return new_response
 
