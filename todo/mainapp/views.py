@@ -131,7 +131,7 @@ class ToDoViewSetBase(ModelViewSet):
     renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
     serializer_class = TodoModelSerializer
-
+    permission_classes = [permissions.IsAuthenticated]
 
 class ToDoViewSet(ModelViewSet):
     # renderer_classes = [JSONRenderer]
@@ -140,7 +140,7 @@ class ToDoViewSet(ModelViewSet):
     filterset_fields = ['project_id']
     pagination_class = ToDoLimitOffsetPagination
 
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     # http_method_names = ['get', 'post', 'head', 'delete']
 
     def create(self, request, *args, **kwargs):

@@ -157,6 +157,7 @@ class App extends React.Component {
     const headers = this.get_headers()
     axios.post(`${this.url_api['projects']}`, data, {headers, headers})
       .then(response => {
+        console.log('сработал')
         let newProject = response.data;
         this.setState ({projects: [...this.state.projects, newProject]})})
         .catch(error => console.log(error))
