@@ -1,5 +1,6 @@
 aniso8601==7.0.0
 asgiref==3.5.0
+backports.zoneinfo==0.2.1
 certifi==2021.10.8
 charset-normalizer==2.0.12
 click==8.1.2
@@ -32,6 +33,7 @@ MarkupSafe==2.1.1
 mixer==7.2.2
 packaging==21.3
 promise==2.3
+psycopg2-binary==2.9.3
 PyJWT==2.3.0
 pyparsing==3.0.7
 python-dateutil==2.8.2
