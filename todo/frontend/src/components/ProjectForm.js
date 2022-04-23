@@ -74,40 +74,42 @@ class ProjectForm extends React.Component {
     render() {
         return(
             <form onSubmit={(event) => this.handleSubmit(event)}>
-                <div>
-                    <label for='name'>Наименование проекта:</label>
-                    <input type='text' className="form-control" name="name" value={this.state.name} onChange={(event) => this.handleChange(event)}/>
-                </div>
-                <div>
-                    <label for='description'>Описание проекта:</label>
-                    <textarea rows="4" cols="120" className="form-control" name='description' value={this.state.description} onChange={(event) => this.handleChange(event)}>
+                <div className="main">
+                    <div className="field">
+                        <label for='name'>Наименование проекта:</label>
+                        <input type='text' className="form-control" name="name" value={this.state.name} onChange={(event) => this.handleChange(event)}/>
+                    </div>
+                    <div className="field">
+                        <label for='description'>Описание проекта:</label>
+                        <textarea rows="4" cols="120" className="form-control" name='description' value={this.state.description} onChange={(event) => this.handleChange(event)}>
 
-                    </textarea>
-                </div>
-                <div>
-                    <label for='hrefRepo'>Ссылка на репозиторий:</label>
-                    <input type='url' className="form-control" name="hrefRepo" value={this.state.hrefRepo} onChange={(event) => this.handleChange(event)}/>
-                </div>
-                <div>
-                    <label for='usersOnProject'>Пользователи на проекте:</label>
-                    <ul>
-                      {this.state.userOnProject.map((user) => <li class='userLi'>{user.username}</li>)}
+                        </textarea>
+                    </div>
+                    <div className="field">
+                        <label for='hrefRepo'>Ссылка на репозиторий:</label>
+                        <input type='url' className="form-control" name="hrefRepo" value={this.state.hrefRepo} onChange={(event) => this.handleChange(event)}/>
+                    </div>
+                    <div className="field">
+                        <label for='usersOnProject'>Пользователи на проекте:</label>
+                        <ul>
+                        {this.state.userOnProject.map((user) => <li class='userLi'>{user.username}</li>)}
 
-                      {/* {this.is_authenticated() ? <button onClick={ () => this.logout()}>Выход</button> : <Link to='/login'>Вход</Link>}    */}
+                        {/* {this.is_authenticated() ? <button onClick={ () => this.logout()}>Выход</button> : <Link to='/login'>Вход</Link>}    */}
 
+                        
+                        
+                        </ul>
+                        
+                        <select size='10' className="form-control" multiple="multiple" id='usersOnProject' onChange={(event) => this.handleChange(event)} >
+                            {this.props.users.map(
+                                (user) => 
+                                <option value={user.id} onClick={(event) => this.handleChange(event)}>{user.username}</option>)}
+                        
+                        </select>
+                    </div>
                     
-                    
-                    </ul>
-                    
-                    <select size='10' className="form-control" multiple="multiple" id='usersOnProject' onChange={(event) => this.handleChange(event)} >
-                        {this.props.users.map(
-                            (user) => 
-                            <option value={user.id} onClick={(event) => this.handleChange(event)}>{user.username}</option>)}
-                    
-                    </select>
+                    <button type="submit" className="btn_action_large">Сохранить</button>
                 </div>
-                
-                <input type="submit" className="btn btn-primary" value="Сохранить" />
             </form>   
         )
     }

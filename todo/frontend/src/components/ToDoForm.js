@@ -221,11 +221,13 @@ class ToDoForm extends React.Component {
                 </div>
                 <div>
                     <label for='isActive'>Задача на исполнении</label>
-                    <input type='checkbox' className="form-control" name="isActive" value={this.state.isActive} onClick={(event) => this.handleChange(event)}/> 
+                    <input type='checkbox' className="form-control" name="isActive" value={this.state.isActive} 
+                    defaultChecked={this.state.isActive} onClick={(event) => this.handleChange(event)}/> 
                 </div>
                 <div>
                     <label for='isClose'>Задача завершена</label>
-                    <input type='checkbox' className="form-control" name="isClose" value={this.state.isClose} onClick={(event) => this.handleChange(event)}/> 
+                    <input type='checkbox' className="form-control" name="isClose" value={this.state.isClose} 
+                    defaultChecked={this.state.isClose} onClick={(event) => this.handleChange(event)}/> 
                 </div>
                 <div>
                     {/* {this.otherData.usersOnProject[0].id} */}
@@ -234,8 +236,9 @@ class ToDoForm extends React.Component {
                         {this.state.usersOnProject.map(
                             (curUser) => (
                                 <>  
-                                    <li class={'userLi u' + curUser.id + (this.containsEl(this.state.userOnTodo.map((el) => el.id), curUser.id) ? ' userChecked' : '')}>{curUser.user.username}
-                                        <input type='checkbox' id={curUser.id} onChange={(event) => this.selectExecutor(event)} class='inputUser'>
+                                    <li className={'userLi u' + curUser.id + (this.containsEl(this.state.userOnTodo.map((el) => el.id), curUser.id) ? ' userChecked' : '')}>{curUser.user.username}
+                                        <input type='checkbox' id={curUser.id} onChange={(event) => this.selectExecutor(event)} class='inputUser' 
+                                         defaultChecked={(this.containsEl(this.state.userOnTodo.map((el) => el.id), curUser.id) ? true : false)}>
                                         </input>
                                     </li> 
                                 </>
@@ -245,7 +248,7 @@ class ToDoForm extends React.Component {
                 </div>
                 
                 <h2>Дата последнего изменения: {this.state.lastModified}</h2>
-                <input type="submit" className="btn btn-primary" value="Сохранить" />
+                <button type="submit" className="btn_action_large">Сохранить</button>
             </form>   
         )
     }
