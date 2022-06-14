@@ -1,4 +1,4 @@
-from rest_framework.serializers import HyperlinkedModelSerializer
+from rest_framework.serializers import HyperlinkedModelSerializer, ModelSerializer
 from authapp.models import User
 
 
@@ -14,3 +14,25 @@ class AppUsersSerializer(HyperlinkedModelSerializer):
                   'add_datetime',
                   'last_modified',
                   ]
+
+
+class AppUsersExtendedSerializer(HyperlinkedModelSerializer):
+    class Meta:
+        model = User
+        # fields = '__all__'
+        fields = ['id',
+                  'username',
+                  'first_name',
+                  'last_name',
+                  'email',
+                  'add_datetime',
+                  'last_modified',
+                  'is_staff',
+                  'is_superuser',
+                  ]
+
+class ShortUserSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        # fields = '__all__'
+        fields = ['id', 'username', 'first_name', 'last_name']
