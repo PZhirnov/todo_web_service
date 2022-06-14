@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from uuid import uuid4
 
 
-class ApiUser(AbstractUser):
+class User(AbstractUser):
     uid = models.UUIDField(primary_key=True, default=uuid4(), null=False)
     email = models.EmailField(unique=True)
     add_datetime = models.DateTimeField(verbose_name='дата и время создания', auto_now_add=True)

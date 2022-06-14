@@ -1,10 +1,10 @@
 from rest_framework.serializers import HyperlinkedModelSerializer
-from authapp.models import ApiUser
+from authapp.models import User
 
 
 class AppUsersSerializer(HyperlinkedModelSerializer):
     class Meta:
-        model = ApiUser
+        model = User
         # fields = '__all__'
         fields = ['uid',
                   'username',
