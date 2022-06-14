@@ -14,8 +14,8 @@ class Project(models.Model):
     name = models.CharField(verbose_name='наименование проекта', max_length=64, blank=False, unique=True)
     description = models.TextField(verbose_name='описание проекта')
     href_repo = models.URLField(verbose_name='ccылка на репозиторий')
-    initiator_project = models.ForeignKey(User, on_delete=models.SET('n/a'), verbose_name='uid инициатор проекта')
-    # user_on_project = models.ManyToManyField(User, verbose_name='пользователь на проекте')
+    # initiator_project = models.ForeignKey(User, on_delete=models.SET('n/a'), verbose_name='uid инициатор проекта')
+    user_on_project = models.ManyToManyField(User, verbose_name='пользователь на проекте', through='UserOnProject')
     add_date = models.DateTimeField(verbose_name='дата добавления проекта в БД', auto_now_add=True)
     last_modified = models.DateTimeField(verbose_name='дата последнего изменния', auto_now=True)
 
@@ -33,7 +33,10 @@ class UserOnProject(models.Model):
     last_modified = models.DateTimeField(verbose_name='дата последнего изменния', auto_now=True)
 
     def __str__(self):
-        return f"{self.project} - {self.user}  "
+        return f"{self.project} "
+
+    def get_user(self):
+        return self.user
 
 
 # Описание полей заметки
@@ -41,8 +44,7 @@ class ToDo(models.Model):
     # uid = models.UUIDField(verbose_name='id заметки', primary_key=True, default=uuid4())
 
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
-
-    # user_on_todo = models.ManyToManyField(User, verbose_name='исполнитель заметки')
+    user_on_todo = models.ManyToManyField(UserOnProject, through='Executor')
 
     title = models.CharField(verbose_name='заголовок заметки', max_length=64,
                              unique=False, default='не определен')
