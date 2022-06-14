@@ -8,5 +8,3 @@ class User(AbstractUser):
     email = models.EmailField(unique=True)
     add_datetime = models.DateTimeField(verbose_name='дата и время создания', auto_now_add=True)
     last_modified = models.DateTimeField(verbose_name='последнее изменение', auto_now=True)
-
-# Create your models here.
