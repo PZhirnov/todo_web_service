@@ -21,7 +21,9 @@ const ProjectItem = ({project, deleteProject}) => {
                {project.addDate}
            </td>
            <td>
-               {project.userOnProject.map((user) => user.username).join(', \n')}
+               <ul>
+                {project.userOnProject.map((user) => <li class="userSmall">{user.username}</li>)} 
+               </ul>
            </td>
            <td>
                 <Link to={`projects/tasks/${project.id}/${project.name}/`} class="btn btn-dark">Список</Link>
@@ -80,6 +82,7 @@ const ProjectList = ({projects, deleteProject, searchProject}) => {
                 
             
             <table>
+                
                 <th>
                     id
                 </th>
@@ -105,13 +108,12 @@ const ProjectList = ({projects, deleteProject, searchProject}) => {
                     Действия
                 </th>
                 {projects.map((project) => <ProjectItem project={project} deleteProject={deleteProject}/>)}
+                <tr className="createRow">
+                    <div class="createBtn">
+                        <Link to='/projects/create/' class='createBtn'> + Создать проект</Link>
+                    </div>    
+                </tr>
             </table>
-            {
-                //addEvents()
-            }
-            <div class="createBtn">
-                <Link to='/projects/create/' class='createBtn'> + Создать проект</Link>
-            </div>
         </div>
             
     )

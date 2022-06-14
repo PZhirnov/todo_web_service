@@ -22,10 +22,10 @@ const NotFound404 = ({ location }) => {
   )
 } 
 
-const login = ({ location }) => {
+const login = ({ txt }) => {
   return (
     <div>
-      <h1>Для </h1>
+      <h3>{txt}</h3>
     </div>
   )
 } 
@@ -68,6 +68,8 @@ class App extends React.Component {
 
   logout() {
     this.set_token('')
+    window.location.href = "/";
+    
   }
 
   get_token_from_storage() {
@@ -157,6 +159,7 @@ class App extends React.Component {
     const headers = this.get_headers()
     axios.post(`${this.url_api['projects']}`, data, {headers, headers})
       .then(response => {
+        console.log('сработал')
         let newProject = response.data;
         this.setState ({projects: [...this.state.projects, newProject]})})
         .catch(error => console.log(error))
@@ -219,10 +222,9 @@ class App extends React.Component {
     const headers = this.get_headers();
     console.log(`создание todo ${data}`)
     console.log(data)
-    // ДОПИСАТЬ КОД ОТПРАВКИ ЗАПРОСА
     axios.put(`${this.url_api['todo']}${id}/`, data, {headers, headers})
       .then(response => {
-        //this.load_data();
+        this.load_data();
       })
       .catch(error => console.log(error))
     console.log(this.state.todo_items)
@@ -238,22 +240,26 @@ class App extends React.Component {
     return (
       
       <div className='App'>
-          Приложение ToDo:       
+          <h1>Приложение ToDo:</h1>       
           <BrowserRouter>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
-              
-              {this.is_authenticated() ? <button onClick={ () => this.logout()}>Выход</button> : <Link to='/login'>Вход</Link>}              
+              {this.is_authenticated() ? <button onClick={ () => this.logout()}>Выход</button> : ''}              
               {this.is_authenticated() ? 
-              <ul>
-                <h1>Пользователь: {this.state.username}</h1>
-                <li><Link to='/users'>Пользователи</Link></li> 
-                <li><Link to='/projects'>Проекты</Link></li>
-                <li><Link to='/tasks'>Задачи</Link></li>
-              </ul>
-              : ''}  
+                <ul>
+                    <h1>Пользователь: {this.state.username}</h1>
+                    <li><Link to='/users'>Пользователи</Link></li> 
+                    <li><Link to='/projects'>Проекты</Link></li>
+                    <li><Link to='/tasks'>Задачи</Link></li>
+                </ul>
+                : ''
+              }  
             </nav>
+            {this.is_authenticated() == '' ? <Route exact path='/' component={() => 
+              <LoginForm get_token={(username, password) => this.get_token(username, password)} />} /> : ''}
+
             <Switch>
-              <Route exact path='/' component={() => <UsersList users={this.state.users} />} />
+              
+              <Route exact path='/' component={login}/>
               <Route exact path='/users' component={() => <UsersList users={this.state.users} />} />
               
               <Route exact path='/projects' component={
@@ -298,10 +304,6 @@ class App extends React.Component {
                 
               <Route exact path='/projects/tasks/:id/:title/' component={() => <ProjectToDoList todo_items={this.state.todo_items}/>}/>
 
-              { this.is_authenticated() == '' ? <Route exact path='/login' 
-              component={() => <LoginForm get_token={(username, password) => this.get_token(username, password)} />} /> : ''}
-              
-              
               <Route component={NotFound404} />
             </Switch>
           </BrowserRouter>

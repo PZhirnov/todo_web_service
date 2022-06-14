@@ -115,6 +115,54 @@ input {
 
 }
 
+.btn_action_large {
+  display: inline;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  color: aquamarine;
+  background-color: #525258;
+  border: none;
+
+}
+
+.btn_action_large:hover{
+  display: inline;
+  margin: 10px;
+  padding: 20px;
+  border-radius: 10px;
+  color: aquamarine;
+  background-color: #d2d2eb;
+  border: none;
+
+}
+
+.btn_login {
+  display: inline;
+  margin: 10px;
+  padding: 15px;
+  width: 100px;
+  border-radius: 10px;
+  color: aquamarine;
+  background-color: #525258;
+  border: none;
+
+}
+
+.btn_login:hover{
+  display: inline;
+  margin: 10px;
+  padding: 15px;
+  width: 100px;
+  border-radius: 10px;
+  color: aquamarine;
+  background-color: #d2d2eb;
+  border: none;
+
+}
+
+
+
 .btn {
   display: inline;
   margin: 5px;
@@ -137,3 +185,24 @@ input {
   color: azure;
 }
 
+.login {
+  font-size: 20px;
+  border: none;
+  padding: 15px;
+  border-radius: 10px;
+}
+
+table {
+  width: 70%; /* Ширина таблицы */
+  border: 1px solid green; /* Рамка вокруг таблицы */
+  margin: auto; /* Выравниваем таблицу по центру окна  */
+ }
+ td {
+  text-align: center; /* Выравниваем текст по центру ячейки */
+  background: rgb(53, 53, 53); /* Цвет фона ячеек */
+  padding: 5px; /* Поля вокруг текста */
+ }
+
+ createRow {
+   
+ }

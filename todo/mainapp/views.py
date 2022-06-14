@@ -131,7 +131,7 @@ class ToDoViewSetBase(ModelViewSet):
     renderer_classes = [JSONRenderer]
     queryset = ToDo.objects.all()
     serializer_class = TodoModelSerializer
-
+    permission_classes = [permissions.IsAuthenticated]
 
 class ToDoViewSet(ModelViewSet):
     # renderer_classes = [JSONRenderer]
@@ -140,7 +140,7 @@ class ToDoViewSet(ModelViewSet):
     filterset_fields = ['project_id']
     pagination_class = ToDoLimitOffsetPagination
 
-    # permission_classes = [permissions.IsAuthenticated]
+    permission_classes = [permissions.IsAuthenticated]
     # http_method_names = ['get', 'post', 'head', 'delete']
 
     def create(self, request, *args, **kwargs):
@@ -233,6 +233,7 @@ class ToDoViewSet(ModelViewSet):
 class UserOnProjectViewSet(ModelViewSet):
     queryset = UserOnProject.objects.all()
     serializer_class = UserOnProjectSerializer
+    permission_classes = [permissions.IsAuthenticated]
 
 
 class UserOnProjectById(ModelViewSet):
@@ -258,10 +259,12 @@ class ExecutorViewSet(ModelViewSet):
 
 
 class SwaggerTemplateView(TemplateView):
+    # permission_classes = [permissions.IsAuthenticated]
     template_name = 'swagger-ui.html'
     extra_context = {'schema_url': 'openapi-schema'}
 
 
 class RedocTemplateView(TemplateView):
+    # permission_classes = [permissions.IsAuthenticated]
     template_name = 'redoc.html'
     extra_context = {'schema_url': 'openapi-schema'}
