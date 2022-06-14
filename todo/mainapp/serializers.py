@@ -4,16 +4,16 @@ from authapp.serializers import AppUsersSerializer
 from .models import Project, ToDo, UserOnProject, Executor
 
 
-class ProjectModelSerializer(HyperlinkedModelSerializer):
+class ProjectModelSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Project
         fields ='__all__'
 
 
-class UserOnProjectSerializer(HyperlinkedModelSerializer):
-    project = ProjectModelSerializer()
-    user = AppUsersSerializer()
+class UserOnProjectSerializer(serializers.ModelSerializer):
+    # project = serializers.StringRelatedField(many=False)
+    # user = AppUsersSerializer()
 
     class Meta:
         model = UserOnProject
@@ -26,8 +26,8 @@ class ExecutorToDoModelSerializer(HyperlinkedModelSerializer):
         fields = '__all__'
 
 
-class TodoModelSerializer(HyperlinkedModelSerializer):
-    project = ProjectModelSerializer()
+class TodoModelSerializer(serializers.ModelSerializer):
+   #  project = ProjectModelSerializer()
 
     class Meta:
         model = ToDo
