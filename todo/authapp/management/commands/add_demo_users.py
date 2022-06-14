@@ -1,5 +1,5 @@
 from django.core.management.base import BaseCommand, CommandError
-from authapp.models import ApiUser
+from authapp.models import User
 from uuid import uuid4
 
 
@@ -8,7 +8,7 @@ def create_user(username, password, email="", firstName="", lastName="", is_supe
     Функция создает суперпользователя
     """
     try:
-        user = ApiUser(username=username, email=email, first_name=firstName, last_name=lastName)
+        user = User(username=username, email=email, first_name=firstName, last_name=lastName)
         user.set_password(password)
         user.uid = uuid4()
         user.is_superuser = is_superuser
