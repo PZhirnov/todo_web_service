@@ -21,7 +21,7 @@ from rest_framework.generics import ListAPIView, UpdateAPIView, RetrieveAPIView,
 
 
 class AppUserViewSet(ModelViewSet):
-    renderer_classes = [JSONRenderer]
+    # renderer_classes = [JSONRenderer]
     queryset = User.objects.all()
     serializer_class = AppUsersSerializer
     permission_classes = [permissions.IsAuthenticated]

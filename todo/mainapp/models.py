@@ -33,7 +33,7 @@ class UserOnProject(models.Model):
     last_modified = models.DateTimeField(verbose_name='дата последнего изменния', auto_now=True)
 
     def __str__(self):
-        return f"{self.project} - {self.user}  "
+        return f"{self.project} "
 
     def get_user(self):
         return self.user

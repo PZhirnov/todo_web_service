@@ -19,20 +19,24 @@ from django.urls import path, include, re_path
 from django.views.generic import TemplateView
 from rest_framework.routers import DefaultRouter
 from authapp.views import AppUserViewSet
-from mainapp.views import ProjectViewSet, ToDoViewSet,  UserOnProjectViewSet, ExecutorViewSet
+from mainapp.views import ProjectViewSet, ToDoViewSet, ToDoViewSetBase, UserOnProjectViewSet, ExecutorViewSet, UserOnProjectById
+
 from authapp.views import AppUserViewSet
+
 from rest_framework.authtoken import views
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 from drf_yasg.views import get_schema_view
 from drf_yasg import openapi
 from rest_framework import permissions
 from mainapp.views import SwaggerTemplateView, RedocTemplateView
+# from graphene_django.views import GraphQLView
 
 
 router = DefaultRouter()
 router.register('users', AppUserViewSet, basename='users')
 router.register('projects', ProjectViewSet, basename='projects')
 router.register('todo', ToDoViewSet)
+router.register('todo/base', ToDoViewSetBase)
 router.register('users_on_project', UserOnProjectViewSet)
 router.register('executors', ExecutorViewSet)
 
@@ -55,6 +59,7 @@ urlpatterns = [
     path('api/token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('api/token/verify/', TokenVerifyView.as_view(), name='token_verify'),
+    path('api/available/', UserOnProjectById.as_view({'get': 'list'})),
     # path('api/users/', AppUserViewSet.as_view()),
     # path('api/todo/<int:pk>', ToDoViewSet.as_view({'get': 'list'})),
     # path('api/todo/', ToDoViewSet.as_view({'get': 'list'})),
@@ -80,6 +85,9 @@ urlpatterns = [
     path('swagger-ui/', SwaggerTemplateView.as_view(), name='swagger-ui'),
     # ReDoc
     path('redoc-ui/', RedocTemplateView.as_view(), name='redoc-ui'),
+
+    #GraphQl
+    # path('graphql/', GraphQLView.as_view(graphiql=True)),
 ]
 
 # https://www.django-rest-framework.org/coreapi/schemas/

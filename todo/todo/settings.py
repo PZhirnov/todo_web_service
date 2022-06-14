@@ -25,6 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-8q5#b_o-p@0y#$57@!hsx&^z2xfazc1-_kq15uc53vg3o3uo63'
 
 # SECURITY WARNING: don't run with debug turned on in production!
+PROD = False
 DEBUG = True
 
 ALLOWED_HOSTS = ['*']
@@ -52,6 +53,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework.authtoken',
     'drf_yasg',
+    # 'graphene_django',
 ]
 
 MIDDLEWARE = [
@@ -90,12 +92,33 @@ WSGI_APPLICATION = 'todo.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+
+
+if not PROD:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': BASE_DIR / 'db.sqlite3',
+        }
     }
+else:
+    DATABASES = {
+        'default': {
+            'ENGINE': 'django.db.backends.postgresql',
+            'NAME': 'todo',
+            'USER': 'django',
+            'PASSWORD': 'geekbrains',
+            'HOST': 'db',
+            'PORT': '5432',
+        }
+    }
+
+
+
+GRAPHENE = {
+    "SCHEMA": "todo.schema.schema"
 }
+
 
 
 # Password validation

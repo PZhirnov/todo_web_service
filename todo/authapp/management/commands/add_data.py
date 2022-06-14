@@ -5,8 +5,8 @@ from random import random
 from uuid import uuid4
 
 
-def add_project(name, description, initiator, href_repo='n/a'):
-    project = Project(name=name, description=description, initiator_project=initiator, href_repo=href_repo)
+def add_project(name, description, href_repo='n/a'):
+    project = Project(name=name, description=description, href_repo=href_repo)
     project.save()
     return project
 
@@ -36,8 +36,7 @@ class Command(BaseCommand):
         # Добавим проект
         users = User.objects.all()
         for i in range(10):
-            project = add_project(name=f'Новый проект {round(random()*1000)}', description='Замечательный проект',
-                                  initiator=users[round(random() * (len(users)-1) + 1)-1])
+            project = add_project(name=f'Новый проект {round(random()*1000)}', description='Замечательный проект')
             # Добавим пользователей на проекты
             for user in users[:round(random() * len(users))]:
                 add_user_on_project(project, user)
