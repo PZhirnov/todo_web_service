@@ -2,33 +2,29 @@ import React from "react";
 
 
 // Функция получает индексы выбранных проектов из массива select
-function getSelectedIndexes (oListbox)
-{
-  var arrIndexes = new Array;
-  for (var i=0; i < oListbox.options.length; i++)
-  {
-      if (oListbox.options[i].selected) arrIndexes.push(i);
-  }
-  return arrIndexes;
+function getSelectedIndexes(oListbox) {
+    var arrIndexes = new Array;
+    for (var i = 0; i < oListbox.options.length; i++) {
+        if (oListbox.options[i].selected) arrIndexes.push(i);
+    }
+    return arrIndexes;
 };
 
 // Функция получает id выбранных проектов из select
-function getSelectedId (oListbox)
-{
-  var arrId = new Array;
-  for (var i=0; i < oListbox.options.length; i++)
-  {
-      if (oListbox.options[i].selected) arrId.push(
-          {id: oListbox.options[i].value, username: oListbox.options[i].innerHTML}
-          );
-  }
-  return arrId;
+function getSelectedId(oListbox) {
+    var arrId = new Array;
+    for (var i = 0; i < oListbox.options.length; i++) {
+        if (oListbox.options[i].selected) arrId.push(
+            { id: oListbox.options[i].value, username: oListbox.options[i].innerHTML }
+        );
+    }
+    return arrId;
 };
 
 
 class ProjectForm extends React.Component {
 
-    constructor (props) {
+    constructor(props) {
         super(props)
         console.log(props);
         if (props.edit) {
@@ -42,8 +38,8 @@ class ProjectForm extends React.Component {
             //SelectUsersOnProject(usersList, usersOnProjectId)
 
         } else {
-            this.state = {name: '', description: '', hrefRepo: '', addDate: '', lastModified: '', userOnProject: []}    
-        }  
+            this.state = { name: '', description: '', hrefRepo: '', addDate: '', lastModified: '', userOnProject: [] }
+        }
     }
 
     handleChange(event) {
@@ -72,45 +68,47 @@ class ProjectForm extends React.Component {
     }
 
     render() {
-        return(
+        return (
             <form onSubmit={(event) => this.handleSubmit(event)}>
                 <div className="main">
                     <div className="field">
-                        <label for='name'>Наименование проекта:</label>
-                        <input type='text' className="form-control" name="name" value={this.state.name} onChange={(event) => this.handleChange(event)}/>
+                        <label className="label-for-field" for='name'>Наименование проекта:</label>
+                        <input type='text' className="form-field" name="name" value={this.state.name} onChange={(event) => this.handleChange(event)} />
                     </div>
                     <div className="field">
-                        <label for='description'>Описание проекта:</label>
-                        <textarea rows="4" cols="120" className="form-control" name='description' value={this.state.description} onChange={(event) => this.handleChange(event)}>
+                        <label className="label-for-field" for='description'>Описание проекта:</label>
+                        <textarea rows="4" cols="120" className="form-field" name='description' value={this.state.description} onChange={(event) => this.handleChange(event)}>
 
                         </textarea>
                     </div>
                     <div className="field">
-                        <label for='hrefRepo'>Ссылка на репозиторий:</label>
-                        <input type='url' className="form-control" name="hrefRepo" value={this.state.hrefRepo} onChange={(event) => this.handleChange(event)}/>
+                        <label className="label-for-field" for='hrefRepo'>Ссылка на репозиторий:</label>
+                        <input type='url' className="form-field" name="hrefRepo" value={this.state.hrefRepo} onChange={(event) => this.handleChange(event)} />
                     </div>
                     <div className="field">
-                        <label for='usersOnProject'>Пользователи на проекте:</label>
-                        <ul>
-                        {this.state.userOnProject.map((user) => <li class='userLi'>{user.username}</li>)}
-
-                        {/* {this.is_authenticated() ? <button onClick={ () => this.logout()}>Выход</button> : <Link to='/login'>Вход</Link>}    */}
-
-                        
-                        
+                        <label className="label-for-field" for='usersOnProject'>Пользователи на проекте:</label>
+                        <ul className="list-user">
+                            {this.state.userOnProject.map((user) => <li class='userLi'>{user.username}</li>)}
                         </ul>
-                        
-                        <select size='10' className="form-control" multiple="multiple" id='usersOnProject' onChange={(event) => this.handleChange(event)} >
+
+                    </div>
+                    <div className="field">
+                        <label className="label-for-field" for='usersOnProject'>Выберите пользователей:</label>
+                        <select
+                            size='10' className="form-field" multiple="multiple" id='usersOnProject'
+                            onChange={(event) => this.handleChange(event)}
+                        >
                             {this.props.users.map(
-                                (user) => 
-                                <option value={user.id} onClick={(event) => this.handleChange(event)}>{user.username}</option>)}
-                        
+                                (user) => <option value={user.id} onClick={(event) => this.handleChange(event)}>{user.username}</option>
+                            )
+                            }
                         </select>
                     </div>
-                    
-                    <button type="submit" className="btn_action_large">Сохранить</button>
+                    <div className="field">
+                        <button type="submit" className="btn_action_large">Сохранить</button>
+                    </div>
                 </div>
-            </form>   
+            </form>
         )
     }
 }
