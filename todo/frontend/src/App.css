@@ -64,16 +64,23 @@ a {
   color: bisque;
 }
 
+.list-user {
+  display: flex;
+  height: 30px;
+  gap: 5px;
+}
+
 .userLi {
-  display: inline;
-  border-block-style: inherit;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   background-color: #525258;
-  padding: 10px;
-  margin-top: 10px;
-  margin: 5px;
+  padding: 5px 10px;
   border-radius: 10px;
   font-style: normal;
   color: azure;
+  list-style: none;
 }
 
 .userSmall {
@@ -97,51 +104,38 @@ a {
 }
 
 
-input {
-  margin: 15px;
+input textarea select {
+  padding: 5px 10px;
 }
 
 
 .btn_action {
   display: inline;
-  margin: 5px;
-  border-radius: 15px;
-  color: aquamarine;
+  padding: 5px 15px;
+  border-radius: 10px;
+  color: rgb(255, 255, 255);
   background-color: #525258;
   border: none;
 
 }
 
 .btn_action:hover {
-  display: inline;
-  margin: 5px;
-  border-radius: 10px;
-  color: aquamarine;
-  background-color: #d2d2eb;
-  border: none;
-
+  background-color: #858585;
 }
 
 .btn_action_large {
   display: inline;
   margin: 10px;
-  padding: 20px;
+  padding: 10px 15px;
   border-radius: 10px;
-  color: aquamarine;
-  background-color: #525258;
+  color: rgb(255, 255, 255);
+  background-color: #6e6e6f;
   border: none;
 
 }
 
 .btn_action_large:hover {
-  display: inline;
-  margin: 10px;
-  padding: 20px;
-  border-radius: 10px;
-  color: aquamarine;
-  background-color: #d2d2eb;
-  border: none;
-
+  background-color: #5c5c5e;
 }
 
 .btn_login {
@@ -195,7 +189,7 @@ input {
 
 
 table {
-  width: 70%;
+  width: 100%;
   /* Ширина таблицы */
   border: 1px solid green;
   /* Рамка вокруг таблицы */
@@ -214,21 +208,31 @@ td {
 
 .navbar {
   display: flex;
+  justify-content: end;
   flex-direction: row;
+  position: sticky;
+  top: 60px;
 }
 
 .menu {
   display: flex;
   flex-direction: row;
-  gap: 10px;
-
+  gap: 30px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: #282828;
   text-decoration: none;
   list-style-type: none;
 }
 
 .header-menu {
   display: flex;
+  padding: 5px;
   flex-direction: row;
+  position: sticky;
+  top: 0;
+  background-color: #282c34;
+
   /* height: 60px; */
   justify-content: space-between;
 }
@@ -238,4 +242,42 @@ td {
   flex-direction: row;
   align-items: center;
   gap: 15px;
+}
+
+.field {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+
+}
+
+.label-for-field {
+  text-align: start;
+  width: 350px;
+}
+
+.form-field {
+  display: flex;
+  width: 100%;
+}
+
+.main {
+  margin-top: 20px;
+  width: 800px;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: end;
+  padding: 10px;
+  position: sticky;
+  top: 100px;
+  background-color: #282c34;
+}
+
+.search input {
+  padding: 5px 10px;
+  border-radius: 10px;
 }

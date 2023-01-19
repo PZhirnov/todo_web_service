@@ -248,7 +248,7 @@ class App extends React.Component {
               <h2>My Todo</h2>
             </div>
             <div className='lk-data'>
-              <h3>{ !this.is_authenticated() ? 'Введите имя пользователя и пароль' : ''}</h3>
+              <h3>{!this.is_authenticated() ? 'Введите имя пользователя и пароль' : ''}</h3>
               {this.is_authenticated() ?
                 <button className='btn_login' onClick={() => this.logout()}>Выход</button> : ''
               }
