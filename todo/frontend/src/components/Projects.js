@@ -42,7 +42,6 @@ const ProjectList = ({projects, deleteProject, searchProject}) => {
 
     console.log(projects)
     
-
     function docLocation(nameAction) {
         // Обработка перехода на форму создания проекта
         let createBtn = document.getElementById("createBtn");
@@ -68,11 +67,10 @@ const ProjectList = ({projects, deleteProject, searchProject}) => {
 
     }
 
-
     return (
 
         <div>
-            <h1>Список проектов:</h1>
+            <h3>Список проектов:</h3>
             {/* <button type="button" id="createBtn" onClick={() => docLocation('create')}>Создать проект</button> */}
             <div class = "search">
                 <label for="fieldSearch">Введите наименование проекта: </label>

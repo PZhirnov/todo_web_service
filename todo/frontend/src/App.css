@@ -1,3 +1,8 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+
 .App {
   text-align: center;
 }
@@ -32,6 +37,7 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
@@ -48,7 +54,8 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
   font-style: normal;
   scrollbar-track-color: #282c34;
-  margin: 5px;
+  padding: 10px;
+  /* margin: 5px; */
   color: bisque;
 
 }
@@ -57,16 +64,23 @@ a {
   color: bisque;
 }
 
+.list-user {
+  display: flex;
+  height: 30px;
+  gap: 5px;
+}
+
 .userLi {
-  display: inline;
-  border-block-style: inherit;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   background-color: #525258;
-  padding: 10px;
-  margin-top: 10px;
-  margin: 5px;
+  padding: 5px 10px;
   border-radius: 10px;
   font-style: normal;
   color: azure;
+  list-style: none;
 }
 
 .userSmall {
@@ -90,75 +104,52 @@ a {
 }
 
 
-input {
-  margin: 15px;
+input textarea select {
+  padding: 5px 10px;
 }
 
 
 .btn_action {
   display: inline;
-  margin: 5px;
+  padding: 5px 15px;
   border-radius: 10px;
-  color: aquamarine;
+  color: rgb(255, 255, 255);
   background-color: #525258;
   border: none;
 
 }
 
-.btn_action:hover{
-  display: inline;
-  margin: 5px;
-  border-radius: 10px;
-  color: aquamarine;
-  background-color: #d2d2eb;
-  border: none;
-
+.btn_action:hover {
+  background-color: #858585;
 }
 
 .btn_action_large {
   display: inline;
   margin: 10px;
-  padding: 20px;
+  padding: 10px 15px;
   border-radius: 10px;
-  color: aquamarine;
-  background-color: #525258;
+  color: rgb(255, 255, 255);
+  background-color: #6e6e6f;
   border: none;
 
 }
 
-.btn_action_large:hover{
-  display: inline;
-  margin: 10px;
-  padding: 20px;
-  border-radius: 10px;
-  color: aquamarine;
-  background-color: #d2d2eb;
-  border: none;
-
+.btn_action_large:hover {
+  background-color: #5c5c5e;
 }
 
 .btn_login {
-  display: inline;
-  margin: 10px;
-  padding: 15px;
-  width: 100px;
+  padding: 5px 15px;
+  /* width: 100px; */
   border-radius: 10px;
-  color: aquamarine;
+  color: rgb(255, 255, 255);
   background-color: #525258;
   border: none;
 
 }
 
-.btn_login:hover{
-  display: inline;
-  margin: 10px;
-  padding: 15px;
-  width: 100px;
-  border-radius: 10px;
-  color: aquamarine;
-  background-color: #d2d2eb;
-  border: none;
-
+.btn_login:hover {
+  background-color: #4b4b4b;
 }
 
 
@@ -188,21 +179,105 @@ input {
 .login {
   font-size: 20px;
   border: none;
-  padding: 15px;
+  padding: 5px 10px;
   border-radius: 10px;
 }
 
-table {
-  width: 70%; /* Ширина таблицы */
-  border: 1px solid green; /* Рамка вокруг таблицы */
-  margin: auto; /* Выравниваем таблицу по центру окна  */
- }
- td {
-  text-align: center; /* Выравниваем текст по центру ячейки */
-  background: rgb(53, 53, 53); /* Цвет фона ячеек */
-  padding: 5px; /* Поля вокруг текста */
- }
+.login-form {
+  margin: 0 auto;
+}
 
- createRow {
-   
- }
+
+table {
+  width: 100%;
+  /* Ширина таблицы */
+  border: 1px solid green;
+  /* Рамка вокруг таблицы */
+  margin: auto;
+  /* Выравниваем таблицу по центру окна  */
+}
+
+td {
+  text-align: center;
+  /* Выравниваем текст по центру ячейки */
+  background: rgb(53, 53, 53);
+  /* Цвет фона ячеек */
+  padding: 5px;
+  /* Поля вокруг текста */
+}
+
+.navbar {
+  display: flex;
+  justify-content: end;
+  flex-direction: row;
+  position: sticky;
+  top: 60px;
+}
+
+.menu {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  padding: 5px 10px;
+  border-radius: 10px;
+  background-color: #282828;
+  text-decoration: none;
+  list-style-type: none;
+}
+
+.header-menu {
+  display: flex;
+  padding: 5px;
+  flex-direction: row;
+  position: sticky;
+  top: 0;
+  background-color: #282c34;
+
+  /* height: 60px; */
+  justify-content: space-between;
+}
+
+.lk-data {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 15px;
+}
+
+.field {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 10px;
+
+}
+
+.label-for-field {
+  text-align: start;
+  width: 350px;
+}
+
+.form-field {
+  display: flex;
+  width: 100%;
+}
+
+.main {
+  margin-top: 20px;
+  width: 800px;
+}
+
+.search {
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: end;
+  padding: 10px;
+  position: sticky;
+  top: 100px;
+  background-color: #282c34;
+}
+
+.search input {
+  padding: 5px 10px;
+  border-radius: 10px;
+}

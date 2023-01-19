@@ -25,7 +25,7 @@ const UsersList = ({users}) => {
     return (
 
         <div>
-            <h1>Cписок пользователей:</h1>
+            <h3>Cписок пользователей:</h3>
             <table>
                 <th>
                     uid

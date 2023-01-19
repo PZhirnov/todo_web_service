@@ -42,10 +42,8 @@ class UserOnProject(models.Model):
 # Описание полей заметки
 class ToDo(models.Model):
     # uid = models.UUIDField(verbose_name='id заметки', primary_key=True, default=uuid4())
-
     project_id = models.ForeignKey(Project, on_delete=models.CASCADE)
     user_on_todo = models.ManyToManyField(UserOnProject, through='Executor')
-
     title = models.CharField(verbose_name='заголовок заметки', max_length=64,
                              unique=False, default='не определен')
     description = models.TextField(verbose_name='текст заметки', default='не определен')
